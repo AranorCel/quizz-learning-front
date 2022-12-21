@@ -1,7 +1,10 @@
 @import "normalize.css";
 @import "base.css";
+@import "mobile.css";
+@import "tablet.css";
 
 .nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    margin : 1rem 1rem;
 }

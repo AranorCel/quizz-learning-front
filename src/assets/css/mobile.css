@@ -1,0 +1,10 @@
+/* Pour l'affichage sur mobile */
+
+@media screen and (max-width: 600px) {
+    .nav {
+        display: flex;
+        flex-direction: column;
+        align-items : center;
+        margin : 1rem 1rem;
+    }
+}

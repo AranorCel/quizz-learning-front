@@ -1,0 +1,9 @@
+/* Pour l'affichage sur tablette */
+
+@media screen and (max-width: 1199px) {
+    .nav {
+        display: flex;
+        justify-content: space-between;
+        margin: 1rem 1rem;
+    }
+}
