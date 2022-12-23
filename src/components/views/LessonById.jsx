@@ -16,6 +16,14 @@ const LessonById = () => {
     return (
         <>
             <h2>{lesson.title}</h2>
+            <div className='card-flip'>
+                <section className='card-front'>
+                    <p>{lesson.description}</p>
+                </section>
+                <section className='card-back'>
+                    <p>{lesson.author}</p>
+                </section>
+            </div>
         </>
     )
 }

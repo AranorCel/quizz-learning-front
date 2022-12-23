@@ -6,7 +6,7 @@ import Card from '../atoms/Card';
 const Lessons = () => {
 
     const [lesson, setLesson] = useState([])
-    const [rangeValue, setRangeValue] = useState(1);
+    const [rangeValue, setRangeValue] = useState(2);
 
     useEffect(() => {
         axios
@@ -18,7 +18,7 @@ const Lessons = () => {
         <>
             <label>Nombre de leçons que vous souhaitez afficher entre 1 et {lesson.length} : </label>
             <input type="range" min="1" max={lesson.length} defaultValue={rangeValue} onChange={(e) => setRangeValue(e.target.value)} />
-            <p>Vous en affichez actuellement : {rangeValue}</p>
+            <p>Vous affichez actuellement {rangeValue} leçons</p>
             <ul>
                 {lesson
                     .slice(0, rangeValue)

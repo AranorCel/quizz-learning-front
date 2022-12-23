@@ -8,6 +8,8 @@ import Quizz from './components/views/Quizz'
 import About from './components/views/About'
 import Login from './components/views/Login'
 import LessonById from './components/views/LessonById'
+import Logout from './components/views/Logout'
+import SignUp from './components/views/SignUp'
 
 const App = () => {
   return (
@@ -22,6 +24,8 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/logout' element={<Logout/>} />
+            <Route path='/signup' element={<SignUp/>} />
             <Route path='/lessons' element={<Lessons />} />
             <Route path='/lesson/:id' element={<LessonById />} />
             <Route path='/quizz' element={<Quizz />} />

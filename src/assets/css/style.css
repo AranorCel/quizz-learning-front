@@ -33,9 +33,6 @@ body {
 	color: rgba(0, 0, 0, 0.5);
 }
 
-
-
-
 /*** HEADER ***/
 header {
     background-color: #8bc34a;
@@ -50,9 +47,14 @@ header * {
 .header-nav {
     display: flex;
     justify-content: space-around;
+    padding : 1rem;
 }
 
 .header-nav a:hover {
+    color:gold;
+}
+
+header .active {
     color:gold;
 }
 
@@ -68,7 +70,7 @@ header * {
     height: 2px;
     content: '';
     background: gold;
-    transition: all 0.3s;
+    transition: all 0.5s;
 }
 
 .surf a:before {
@@ -96,17 +98,18 @@ ul {
     list-style: none;
 }
 
-.card {
+.card, 
+.card-flip {
     width: 25vw;
     border: solid 2px;
-    border-radius: 3%;
+    border-radius: 1%;
     margin : 1rem;
     box-shadow: 5px 5px 15px 2px #aebfff;
     transition: all 0.3s ease;
     transform-style: preserve-3d; 
 }
 
-.card:hover {
+.card-flip:hover {
     transform: rotateY(180deg);
 }
 
@@ -132,8 +135,8 @@ ul {
 }
 
 .details:hover{
-    transform: rotateY(-180deg);
-    transform-style: preserve-3d;
+    background-color: #aebfff;
+    color:brown;
 }
 
 /*** FOOTER ***/
@@ -151,4 +154,14 @@ footer * {
 .footer-nav {
     display: flex;
     justify-content: space-around;
+    padding : 1rem;
+}
+
+
+/*** LOGIN ***/
+
+.login-teacher {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
