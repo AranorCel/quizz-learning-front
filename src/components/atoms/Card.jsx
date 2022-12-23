@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from "react-router-dom"
 
 const Card = ({ lesson }) => {
 
@@ -10,15 +11,18 @@ const Card = ({ lesson }) => {
     return (
         <>
             <li className='card'>
-                <div className='details-front'>
+                <div className='card-front'>
                     <h2>{lesson.title}</h2>
                     <p>Discipline : {lesson.discipline}</p>
                     <p>Cycle : {lesson.cycle}</p>
                     <p>Description : {lesson.description && (lesson.description.substring(min, max)).concat(lesson.description.length > max ? "..." : "")}</p>
                 </div>
-                <div className='details-back'>
+                <div className='card-back'>
                     <p>Date : {lesson.date}</p>
                     <p>Auteur : {lesson.author}</p>
+                </div>
+                <div className='details'>
+                    <NavLink to={`/lesson/${lesson._id}`}>Voir cette leçon </NavLink>
                 </div>
             </li>
         </>

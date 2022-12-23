@@ -7,6 +7,7 @@ import Lessons from './components/views/Lessons'
 import Quizz from './components/views/Quizz'
 import About from './components/views/About'
 import Login from './components/views/Login'
+import LessonById from './components/views/LessonById'
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/lessons' element={<Lessons />} />
+            <Route path='/lesson/:id' element={<LessonById />} />
             <Route path='/quizz' element={<Quizz />} />
             <Route path='/about' element={<About />} />
             {/* Gestion des pages non référencées par le sélecteur * avec redirection sur la page Home */}

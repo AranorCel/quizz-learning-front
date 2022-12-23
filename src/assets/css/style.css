@@ -1,15 +1,91 @@
 @import "normalize.css";
-@import "base.css";
 @import "mobile.css";
 @import "tablet.css";
 
-/*** HEADER ***/
-.nav {
-    display: flex;
-    justify-content: space-around;
-    margin : 1rem 1rem;
+:root {
+    --header-nav-color : white;
 }
 
+/*** GLOBAL ***/
+* {
+	box-sizing: border-box;
+	outline: none;
+	text-decoration: none;
+	transition: all .2s ease 0s;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	/* Visualisation des éléments */
+	/* border: 1px dotted rgba(0,0,0,0.3); */
+}
+
+*:hover {
+	transition: all .2s ease 0s;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 1.6rem;
+	line-height: 1.6;
+	color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+/*** HEADER ***/
+header {
+    background-color: #8bc34a;
+}
+
+header * {
+    color: var(--header-nav-color);
+    margin : 0 auto;
+    text-align: center;
+}
+
+.header-nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+.header-nav a:hover {
+    color:gold;
+}
+
+.header-nav a {
+    position: relative;
+}
+
+.surf a:before,
+.surf a:after {
+    position: absolute;
+    opacity: 0;
+    width: 0%;
+    height: 2px;
+    content: '';
+    background: gold;
+    transition: all 0.3s;
+}
+
+.surf a:before {
+    left: 0px;
+    top: 0px;
+}
+
+.surf a:after {
+    right: 0px;
+    bottom: 0px;
+}
+
+.surf a:hover:before,
+.surf a:hover:after {
+    opacity: 1;
+    width: 100%;
+}
 
 /*** Component CARD ***/
 ul {
@@ -21,7 +97,7 @@ ul {
 }
 
 .card {
-    max-width: 25vw;
+    width: 25vw;
     border: solid 2px;
     border-radius: 3%;
     margin : 1rem;
@@ -34,18 +110,45 @@ ul {
     transform: rotateY(180deg);
 }
 
-.card p, 
-.card h2 {
-    margin : 0.5rem;
+.card * {
+    margin : 0;
 }
 
-.details-front {
+.card-front {
     background: lightgreen;
     backface-visibility: hidden;
 }
 
-.details-back {
+.card-back {
     background: skyblue;
     backface-visibility: hidden;
     transform: rotateY(-180deg);
+}
+
+.details {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.details:hover{
+    transform: rotateY(-180deg);
+    transform-style: preserve-3d;
+}
+
+/*** FOOTER ***/
+
+footer {
+    background-color: #8bc34a;
+}
+
+footer * {
+    color: var(--header-nav-color);
+    margin : 0 auto;
+    text-align: center;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: space-around;
 }
