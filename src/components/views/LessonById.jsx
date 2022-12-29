@@ -13,6 +13,12 @@ const LessonById = () => {
             .then(res => setLesson(res.data.lesson))
     });
 
+    const deleteLesson = async () => {
+        await axios
+            .delete(`http://localhost:8000/api/lesson`)
+            .then(() => console.log('leçon supprimée'))
+    }
+
     return (
         <>
             <h2>{lesson.title}</h2>
@@ -23,6 +29,12 @@ const LessonById = () => {
                 <section className='card-back'>
                     <p>{lesson.author}</p>
                 </section>
+            </div>
+            <div>
+                <button>Éditer</button>
+            </div>
+            <div>
+                <button onClick={() => deleteLesson()}>Supprimer</button>
             </div>
         </>
     )

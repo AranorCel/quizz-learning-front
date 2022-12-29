@@ -1,33 +1,47 @@
 import React from 'react'
+import { useForm } from "react-hook-form"
+import axios from 'axios'
 
 const SignUp = () => {
 
-    const handleSumbit = (e) => {
-        e.preventDefault()
-        console.log(e)
+    const { register, handleSubmit, isSubmit, errors } = useForm()
+
+    const onSubmit = async data => {
+        console.log(data)
+        await axios
+            .post("http://localhost:8000/signup/teacher", {
+                email: data.email,
+                password: data.password,
+                firstname: data.firstname,
+                lastname: data.lastname
+            })
+            .then((res) => {
+                console.log(res);
+            },
+                (erreur) => {
+                    console.log(erreur);
+                }
+            );
     }
 
     return (
         <>
-            <form action="" method='POST' className='login-teacher'>
+            <form onSubmit={handleSubmit(onSubmit)} method='POST' className='login-teacher'>
 
                 <label htmlFor="email">Votre email</label>
-                <input type="email" name="email" />
+                <input type="email" name="email" id="email" {...register('email', { required: "Vous devez entrer une adresse mail valide" })} />
+                {!isSubmit && <span>Vous devez entrer une adresse mail valide</span>}
 
                 <label htmlFor="password">Votre mot de passe</label>
-                <input type="password" name="password" />
+                <input type="password" name="password" id="password" autoComplete="current-password" {...register('password', { required: true })} />
 
                 <label htmlFor="firstname">Votre prénom</label>
-                <input type="text" name="firstname" />
+                <input type="text" name="firstname" id="firstname" {...register('firstname', { required: true })} />
 
                 <label htmlFor="lastname">Votre nom de famille</label>
-                <input type="text" name="lastname" />
+                <input type="text" name="lastname" id="lastname" {...register('lastname', { required: true })} />
 
-                {/* <input type="hidden" name="isTeacher" value="true"/>
-
-                <input type="hidden" name="isAdmin" value="false"/> */}
-
-                <button type='submit' onClick={handleSumbit}>Se connecter</button>
+                <button onSubmit={handleSubmit(onSubmit)}>Se connecter</button>
             </form>
         </>
     )

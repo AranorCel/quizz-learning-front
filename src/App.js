@@ -10,6 +10,7 @@ import Login from './components/views/Login'
 import LessonById from './components/views/LessonById'
 import Logout from './components/views/Logout'
 import SignUp from './components/views/SignUp'
+import AddLesson from './components/views/AddLesson'
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
             <Route path='/logout' element={<Logout/>} />
             <Route path='/signup' element={<SignUp/>} />
             <Route path='/lessons' element={<Lessons />} />
+            <Route path='/addLesson' element={<AddLesson />} />
             <Route path='/lesson/:id' element={<LessonById />} />
             <Route path='/quizz' element={<Quizz />} />
             <Route path='/about' element={<About />} />

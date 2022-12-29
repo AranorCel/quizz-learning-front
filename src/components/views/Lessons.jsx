@@ -2,6 +2,7 @@ import React from 'react';
 import axios from "axios"
 import { useState, useEffect } from 'react';
 import Card from '../atoms/Card';
+import { NavLink } from "react-router-dom"
 
 const Lessons = () => {
 
@@ -16,6 +17,8 @@ const Lessons = () => {
 
     return (
         <>
+            <p>Ajouter une <NavLink to="/addLesson">leçon</NavLink></p>
+            
             <label>Nombre de leçons que vous souhaitez afficher entre 1 et {lesson.length} : </label>
             <input type="range" min="1" max={lesson.length} defaultValue={rangeValue} onChange={(e) => setRangeValue(e.target.value)} />
             <p>Vous affichez actuellement {rangeValue} leçons</p>
