@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const SignUp = () => {
 
-    const { register, handleSubmit, isSubmit, errors } = useForm()
+    const { register, handleSubmit, isSubmit } = useForm()
 
     const onSubmit = async data => {
         console.log(data)
@@ -18,14 +18,15 @@ const SignUp = () => {
             .then((res) => {
                 console.log(res);
             },
-                (erreur) => {
-                    console.log(erreur);
+                (error) => {
+                    console.log(error);
                 }
             );
     }
 
     return (
         <>
+            <h1>S'enregistrer</h1>
             <form onSubmit={handleSubmit(onSubmit)} method='POST' className='login-teacher'>
 
                 <label htmlFor="email">Votre email</label>

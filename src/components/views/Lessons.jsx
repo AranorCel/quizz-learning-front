@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom"
 const Lessons = () => {
 
     const [lesson, setLesson] = useState([])
-    const [rangeValue, setRangeValue] = useState(2);
+    const [rangeValue, setRangeValue] = useState(0);
 
     useEffect(() => {
         axios
@@ -18,10 +18,15 @@ const Lessons = () => {
     return (
         <>
             <p>Ajouter une <NavLink to="/addLesson">leçon</NavLink></p>
-            
-            <label>Nombre de leçons que vous souhaitez afficher entre 1 et {lesson.length} : </label>
-            <input type="range" min="1" max={lesson.length} defaultValue={rangeValue} onChange={(e) => setRangeValue(e.target.value)} />
-            <p>Vous affichez actuellement {rangeValue} leçons</p>
+
+            <label>{lesson.length > 0 && `Nombre de leçons que vous souhaitez afficher entre 0 et ${lesson.length}`} : </label>
+            <input type="range" min="0" max={lesson.length} defaultValue={rangeValue} onChange={(e) => setRangeValue(e.target.value)} />
+            {lesson.length !== 0 &&
+                <>
+                    <p>Vous affichez actuellement {rangeValue} leçon{rangeValue > 1 && "s"}</p>
+                </>
+            }
+
             <ul>
                 {lesson
                     .slice(0, rangeValue)

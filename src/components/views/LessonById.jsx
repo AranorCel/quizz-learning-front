@@ -11,12 +11,12 @@ const LessonById = () => {
         axios
             .get(`http://localhost:8000/api/lesson/${id}`)
             .then(res => setLesson(res.data.lesson))
-    });
+    }, [id]);
 
     const deleteLesson = async () => {
         await axios
-            .delete(`http://localhost:8000/api/lesson`)
-            .then(() => console.log('leçon supprimée'))
+            .delete(`http://localhost:8000/api/lesson/${id}`)
+            .then(() => setLesson("leçon supprimée"))
     }
 
     return (
