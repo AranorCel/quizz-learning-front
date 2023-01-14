@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios"
 import { useState, useEffect } from 'react';
-import Card from '../atoms/Card';
+import Card from '../molecules/Card';
 import { NavLink } from "react-router-dom"
 
 const Lessons = () => {

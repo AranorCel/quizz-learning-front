@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const SignUp = () => {
 
-    const { register, handleSubmit, isSubmit } = useForm()
+    const { register, handleSubmit, isSubmit, reset } = useForm()
 
     const onSubmit = async data => {
         console.log(data)
@@ -21,7 +21,8 @@ const SignUp = () => {
                 (error) => {
                     console.log(error);
                 }
-            );
+            )
+        reset();
     }
 
     return (
@@ -31,7 +32,6 @@ const SignUp = () => {
 
                 <label htmlFor="email">Votre email</label>
                 <input type="email" name="email" id="email" {...register('email', { required: "Vous devez entrer une adresse mail valide" })} />
-                {!isSubmit && <span>Vous devez entrer une adresse mail valide</span>}
 
                 <label htmlFor="password">Votre mot de passe</label>
                 <input type="password" name="password" id="password" autoComplete="current-password" {...register('password', { required: true })} />

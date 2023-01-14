@@ -21,71 +21,68 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(e.target.email.value, e.target.password.value)
         try {
             await axios
-                .post("http://localhost:8000/login/teacher", {
-                    email: e.target.email.value,
-                    password: e.target.password.value
-                });
+            .post("http://localhost:8000/login/teacher", {
+                email: e.target.email.value,
+                password: e.target.password.value
+            });
+            // Reset field after onSubmit
             setEmail("");
             setPassword("");
+            // Send email and role in session storage
+            sessionStorage.setItem({"email": email, "role" : role});
+            // Change success's state then display
             setSucces(true);
+
         } catch (error) {
-            console.log(error);
+            if (error.response.status === 400 || error.response.status === 404) { setError("Identifiant ou mot de passe incorrect") };
             setSucces(false);
         };
     }
-
-    return (
+    if (success) return (
+        <section>
+            <h2>Vous êtes connectés !</h2>
+            <p>
+                Vous pouvez retourner à l'<NavLink to="/">accueil</NavLink> ou accéder à vos <NavLink to="/lessons"> leçons</NavLink>.
+            </p>
+        </section>
+    )
+    else return (
         <>
-            {success ? (
-                <section>
-                    <h2>Vous êtes connectés !</h2>
-                    <p>
-                        Vous pouvez retourner à l'<NavLink to="/">accueil</NavLink> ou accéder à vos <NavLink to="/lessons"> leçons</NavLink>.
-                    </p>
+            <h1>Se connecter</h1>
+            <form onSubmit={handleSubmit} method='POST' className='login-teacher'>
 
-                </section>
-            ) : (
-                <>
-                    <section>
-                        <p ref={errorRef} className={error ? "error message" : "offscreen"} aria-live="assertive">{error}
-                        </p>
-                    </section>
+                <label htmlFor="email">Votre email</label>
+                <input
+                    type="email"
+                    name="email"
+                    ref={userRef}
+                    autoComplete="off"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    required
+                />
 
-                    <h1>Se connecter</h1>
-                    <form onSubmit={handleSubmit} method='POST' className='login-teacher'>
+                <label htmlFor="password">Votre mot de passe</label>
+                <input
+                    type="password"
+                    name="password"
+                    autoComplete="off"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    required
+                />
 
-                        <label htmlFor="email">Votre email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            ref={userRef}
-                            autoComplete="off"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            required
-                        />
+                <p ref={errorRef} className={error ? "error message" : ""} aria-live="assertive">{error}
+                </p>
+                <button type='submit'>Se connecter</button>
+            </form>
 
-                        <label htmlFor="password">Votre mot de passe</label>
-                        <input
-                            type="password"
-                            name="password"
-                            autoComplete="off"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            required
-                        />
 
-                        <button type='submit'>Se connecter</button>
-                    </form>
-
-                    <p>
-                        C'est votre première visite ? Il faut d'abord <NavLink to="/signup"> s'enregistrer</NavLink> !
-                    </p>
-                </>
-            )}
+            <p>
+                C'est votre première visite ? Il faut d'abord <NavLink to="/signup"> s'enregistrer</NavLink> !
+            </p>
         </>
     )
 }

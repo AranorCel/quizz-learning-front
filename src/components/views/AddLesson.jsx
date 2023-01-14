@@ -4,10 +4,10 @@ import axios from 'axios'
 
 const AddLesson = () => {
 
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, reset } = useForm()
 
     const onSubmit = async data => {
-        console.log(data)
+        /* console.log(data) */
         await axios
             .post("http://localhost:8000/api/lesson", {
                 title: data.title,

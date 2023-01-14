@@ -1,11 +1,15 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const LessonById = () => {
     const { id } = useParams();
     const [lesson, setLesson] = useState([]);
+    const [status, setStatus] = useState("La leçon existe");
+    const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         axios
@@ -13,14 +17,25 @@ const LessonById = () => {
             .then(res => setLesson(res.data.lesson))
     }, [id]);
 
-    const deleteLesson = async () => {
+    const handleDelete = async () => {
         await axios
             .delete(`http://localhost:8000/api/lesson/${id}`)
-            .then(() => setLesson("leçon supprimée"))
+            .then(() => setStatus("La leçon est supprimée"))
+        handleClose();
+        navigate("/lessons");
     }
 
-    return (
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    if (lesson) return (
         <>
+            <p>{status}</p>
             <h2>{lesson.title}</h2>
             <div className='card-flip'>
                 <section className='card-front'>
@@ -31,10 +46,15 @@ const LessonById = () => {
                 </section>
             </div>
             <div>
-                <button>Éditer</button>
+                <button className="button">Éditer</button>
             </div>
             <div>
-                <button onClick={() => deleteLesson()}>Supprimer</button>
+                <button className="button" onClick={handleClickOpen}>Supprimer</button>
+                <dialog className="dialog" open={open} onClose={handleClose}>
+                    Confirmez la suppression
+                    <button className="button dialog-cancel" onClick={handleClose}>Annuler</button>
+                    <button className="button dialog-delete" onClick={handleDelete}>Supprimer</button>
+                </dialog>
             </div>
         </>
     )

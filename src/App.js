@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./components/views/Home"
-import Footer from './components/atoms/Footer'
-import Header from './components/atoms/Header'
+import Footer from './components/organisms/Footer'
+import Header from './components/organisms/Header'
 import Lessons from './components/views/Lessons'
 import Quizz from './components/views/Quizz'
 import About from './components/views/About'
