@@ -31,12 +31,11 @@ const Login = () => {
             setEmail("");
             setPassword("");
             // Send email and role in session storage
-            sessionStorage.setItem({"email": email, "role" : role});
+            sessionStorage.setItem({"email": email});
             // Change success's state then display
             setSucces(true);
 
         } catch (error) {
-            if (error.response.status === 400 || error.response.status === 404) { setError("Identifiant ou mot de passe incorrect") };
             setSucces(false);
         };
     }

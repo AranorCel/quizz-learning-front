@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios"
 import { useState, useEffect } from 'react';
-import Card from '../molecules/Card';
+import CardLesson from '../molecules/CardLesson';
 import { NavLink } from "react-router-dom"
 
 const Lessons = () => {
@@ -20,9 +20,10 @@ const Lessons = () => {
             <p>Ajouter une <NavLink to="/addLesson">leçon</NavLink></p>
 
             <label>{lesson.length > 0 && `Nombre de leçons que vous souhaitez afficher entre 0 et ${lesson.length}`} : </label>
-            <input type="range" min="0" max={lesson.length} defaultValue={rangeValue} onChange={(e) => setRangeValue(e.target.value)} />
+
             {lesson.length !== 0 &&
                 <>
+                    <input type="range" min="0" max={lesson.length} defaultValue={rangeValue} onChange={(e) => setRangeValue(e.target.value)} />
                     <p>Vous affichez actuellement {rangeValue} leçon{rangeValue > 1 && "s"}</p>
                 </>
             }
@@ -30,7 +31,7 @@ const Lessons = () => {
             <ul>
                 {lesson
                     .slice(0, rangeValue)
-                    .map((lesson, i) => <Card key={i} lesson={lesson} />)}
+                    .map((lesson, i) => <CardLesson key={i} lesson={lesson} />)}
             </ul>
         </>
     )

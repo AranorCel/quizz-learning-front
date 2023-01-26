@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from "react-router-dom"
 
-const Card = ({ lesson }) => {
+const CardLesson = ({ lesson }) => {
 
     //? Nombre minimal de caractères à afficher dans la description
     const min = 0;
@@ -25,4 +25,4 @@ const Card = ({ lesson }) => {
     )
 }
 
-export default Card
+export default CardLesson

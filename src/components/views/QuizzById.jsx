@@ -2,26 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const LessonById = () => {
+const QuizzById = () => {
     
     const { id } = useParams();
-    const [lesson, setLesson] = useState([]);
-    const [status, setStatus] = useState("La leçon existe");
+    const [quizz, setQuizz] = useState([]);
+    const [status, setStatus] = useState("Le quizz existe");
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8000/api/lesson/${id}`)
-            .then(res => setLesson(res.data.lesson))
+            .get(`http://localhost:8000/api/quizz/${id}`)
+            .then(res => setQuizz(res.data.quizz))
     }, [id]);
 
     const handleDelete = async () => {
         await axios
-            .delete(`http://localhost:8000/api/lesson/${id}`)
-            .then(() => setStatus("La leçon est supprimée"))
+            .delete(`http://localhost:8000/api/quizz/${id}`)
+            .then(() => setStatus("Le quizz est supprimé"))
         handleClose();
-        navigate("/lessons");
+        navigate("/quizz");
     }
 
     const handleClickOpen = () => {
@@ -32,18 +32,18 @@ const LessonById = () => {
         setOpen(false);
     };
 
-    /* const { status, lesson, handleClickOpen, handleClose, handleDelete, open} = useLesson() */
+    /* const { status, quizz, handleClickOpen, handleClose, handleDelete, open} = useLesson() */
 
     return (
         <>
             <p>{status}</p>
-            <h2>{lesson.title}</h2>
+            <h2>{quizz.title}</h2>
             <div className='card-flip'>
                 <section className='card-front'>
-                    <p>{lesson.description}</p>
+                    <p>{quizz.description}</p>
                 </section>
                 <section className='card-back'>
-                    <p>{lesson.author}</p>
+                    <p>{quizz.author}</p>
                 </section>
             </div>
             <div>
@@ -61,4 +61,4 @@ const LessonById = () => {
     )
 }
 
-export default LessonById
+export default QuizzById

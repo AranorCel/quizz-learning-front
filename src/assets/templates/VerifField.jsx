@@ -46,3 +46,5 @@ const VerifField = yup.object({
         .string("Format de ville incorrect.")
         .required("Ville requise.")
 }).required();
+
+export default VerifField
