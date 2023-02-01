@@ -91,7 +91,8 @@ header .active {
 }
 
 /*** Component CARD ***/
-ul {
+.lesson-list,
+.quizz-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -162,6 +163,15 @@ footer * {
 /*** LOGIN ***/
 
 .login-teacher {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*** ADD LESSON & QUIZZ ***/
+
+.lesson-form,
+.quizz-form {
     display: flex;
     flex-direction: column;
     align-items: center;

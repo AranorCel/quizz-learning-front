@@ -28,7 +28,7 @@ const Lessons = () => {
                 </>
             }
 
-            <ul>
+            <ul className='lesson-list'>
                 {lesson
                     .slice(0, rangeValue)
                     .map((lesson, i) => <CardLesson key={i} lesson={lesson} />)}

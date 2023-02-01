@@ -17,7 +17,8 @@ const AddLesson = () => {
                 cycle: data.cycle,
                 description: data.description,
                 image: data.image,
-                date: Date.now()
+                date: Date.now(),
+                content: data.content
             })
             .then((res) => {
                 console.log(res);
@@ -48,6 +49,10 @@ const AddLesson = () => {
 
                 <label htmlFor="description">Description succincte</label>
                 <textarea name="description" id="description" {...register('description', { required: true })}></textarea>
+
+                <label htmlFor="content">Question</label>
+                <input type="text" name="content" id="content" {...register('content', { required: true })} />
+                
 
                 <button onSubmit={handleSubmit(onSubmit)}>Créer la leçon</button>
             </form>

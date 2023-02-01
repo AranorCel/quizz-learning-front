@@ -27,7 +27,7 @@ const Home = () => {
         <>
             <section>
                 <p>Les dernières leçons :</p>
-                <ul>
+                <ul className='lesson-list'>
                     {lesson
                         .sort((a, b) => b - a)
                         .slice(0, 3)
@@ -36,7 +36,7 @@ const Home = () => {
             </section>
             <section>
                 <p>Les derniers quizz :</p>
-                <ul>
+                <ul className='quizz-list'>
                     {quizz
                         .sort((a, b) => b - a)
                         .slice(0, 3)

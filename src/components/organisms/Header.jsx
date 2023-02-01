@@ -13,6 +13,7 @@ const Header = () => {
         <p>L'endroit idéal pour découvrir, apprendre et consolider ses connaissances de façon ludique et intéractive.</p>
             <nav className='header-nav surf' activeclassname="active">
                 <NavLink to="/">ACCUEIL</NavLink>
+                <NavLink to="/test">Test</NavLink>
                 <NavLink to="/lessons">LEÇONS</NavLink>
                 <NavLink to="/quizz">QUIZZ</NavLink>
                 <NavLink to="/about">NOTRE HISTOIRE</NavLink>
