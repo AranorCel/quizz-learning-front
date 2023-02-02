@@ -71,11 +71,10 @@ Pour le "backend-js" :
 
 Pour le "frontend" :
 - axios : Pour simplifier la gestion des requêtes et des réponses mais aussi pour convertir automatiquement les données au format JSON.
-- react-dom : Pour créer des applications dynamiques et interactives (exemple : NavLink pour la navigation entre composants comme des pages)
+- react-dom : Pour créer des applications dynamiques et interactives.
 - react-hook-form : Pour améliorer la création des formulaires notamment sur les aspects de validation, de contrôle et d'optimisation des performances.
-- react-router-dom :
-- react-scripts :
-- yup :
+- react-router-dom : Pour gérer les routes et les redirections afin de faciliter la navigation des utilisateurs.
+- yup : Pour valider les données de formulaire avant de les envoyer ce qui sécurise l'application. La création à l'aide de regex et de messages personnalisés est facilitée.
 
 
 ## Version du README

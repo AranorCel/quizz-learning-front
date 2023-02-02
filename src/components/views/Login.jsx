@@ -1,84 +1,34 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+import { useLogin } from './useLogin';
 
 const Login = () => {
-    const userRef = useRef();
-    const errorRef = useRef();
+    // Expérimentation d'un customHook pour séparer l'état d'une part du rendu d'autre part
+    const { handleSubmit, email, setEmail, password, setPassword, error } = useLogin();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSucces] = useState(false);
-
-    useEffect(() => {
-        userRef.current.focus();
-    }, [])
-
-    useEffect(() => {
-        setError("");
-    }, [email, password])
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await axios
-            .post("http://localhost:8000/login/teacher", {
-                email: e.target.email.value,
-                password: e.target.password.value
-            });
-            // Reset field after onSubmit
-            setEmail("");
-            setPassword("");
-            // Send email and role in session storage
-            sessionStorage.setItem({"email": email});
-            // Change success's state then display
-            setSucces(true);
-
-        } catch (error) {
-            setSucces(false);
-        };
-    }
-    if (success) return (
-        <section>
-            <h2>Vous êtes connectés !</h2>
-            <p>
-                Vous pouvez retourner à l'<NavLink to="/">accueil</NavLink> ou accéder à vos <NavLink to="/lessons"> leçons</NavLink>.
-            </p>
-        </section>
-    )
-    else return (
+    return (
         <>
             <h1>Se connecter</h1>
-            <form onSubmit={handleSubmit} method='POST' className='login-teacher'>
-
+            <form onSubmit={handleSubmit} className="login-teacher">
                 <label htmlFor="email">Votre email</label>
                 <input
                     type="email"
-                    name="email"
-                    ref={userRef}
-                    autoComplete="off"
-                    onChange={(e) => setEmail(e.target.value)}
                     value={email}
+                    autoComplete="on"
+                    onChange={(e) => setEmail(e.target?.value)}
                     required
                 />
-
                 <label htmlFor="password">Votre mot de passe</label>
                 <input
                     type="password"
-                    name="password"
-                    autoComplete="off"
-                    onChange={(e) => setPassword(e.target.value)}
                     value={password}
+                    autoComplete="off"
+                    onChange={(e) => setPassword(e.target?.value)}
                     required
                 />
-
-                <p ref={errorRef} className={error ? "error message" : ""} aria-live="assertive">{error}
-                </p>
-                <button type='submit'>Se connecter</button>
+                {error && <p>{error}</p>}
+                <button type="submit">Se connecter</button>
             </form>
-
-
             <p>
                 C'est votre première visite ? Il faut d'abord <NavLink to="/signup"> s'enregistrer</NavLink> !
             </p>

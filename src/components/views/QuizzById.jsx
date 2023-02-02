@@ -32,8 +32,6 @@ const QuizzById = () => {
         setOpen(false);
     };
 
-    /* const { status, quizz, handleClickOpen, handleClose, handleDelete, open} = useLesson() */
-
     return (
         <>
             <p>{status}</p>

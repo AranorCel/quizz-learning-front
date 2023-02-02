@@ -9,7 +9,6 @@ import About from './components/others/About'
 import Login from './components/views/Login'
 import LessonById from './components/views/LessonById'
 import QuizzById from './components/views/QuizzById'
-import Logout from './components/views/Logout'
 import SignUp from './components/views/SignUp'
 import AddLesson from './components/organisms/AddLesson'
 import AddQuizz from './components/organisms/AddQuizz'
@@ -18,6 +17,7 @@ import Mentions from './components/others/Mentions'
 import Charte from './components/others/Charte'
 import PrivacyPolicy from './components/others/PrivacyPolicy'
 import CookieManagement from './components/others/CookieManagement'
+import Logout from './components/views/Logout'
 import Test from './components/others/Test'
 
 const App = () => {
@@ -31,9 +31,10 @@ const App = () => {
 
         <main>
           <Routes>
+            <Route path='/test' element={<Test/>} />
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/logout' element={<Logout/>} />
+            <Route path='/logout' element={<Logout />} />
             <Route path='/signup' element={<SignUp/>} />
             <Route path='/lessons' element={<Lessons />} />
             <Route path='/addLesson' element={<AddLesson />} />
@@ -41,7 +42,6 @@ const App = () => {
             <Route path='/lesson/:id' element={<LessonById />} />
             <Route path='/quizz/:id' element={<QuizzById />} />
             <Route path='/quizz' element={<Quizz />} />
-            <Route path='/test' element={<Test />} />
             {/* Gestion des pages complémentaires */}
             <Route path='/about' element={<About />} />
             <Route path='/contactUs' element={<ContactUs/>} />

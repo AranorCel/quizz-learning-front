@@ -1,91 +1,71 @@
-import React, { useState } from 'react'
-import { useForm } from "react-hook-form"
-import axios from 'axios'
+import React, { useState } from 'react';
 
-const Test = () => {
+const Test = (props) => {
+    const [question, setQuestion] = useState('');
+    const [option1, setOption1] = useState('');
+    const [option2, setOption2] = useState('');
+    const [option3, setOption3] = useState('');
+    const [option4, setOption4] = useState('');
+    const [answer, setAnswer] = useState('');
 
-    const { register, handleSubmit } = useForm()
-    const [questions, setQuestions] = useState([{ question: "", answer: "" },]);
-
-    const handleAddQuestion = () => {
-        setQuestions([...questions, { question: "", answer: "" }]);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const newQuizz = {
+            question,
+            options: [option1, option2, option3, option4],
+            answer,
+        };
+        props.addQuizz(newQuizz);
+        setQuestion('');
+        setOption1('');
+        setOption2('');
+        setOption3('');
+        setOption4('');
+        setAnswer('');
     };
-
-    const handleQuestionChange = (index, event) => {
-        const newQuestions = [...questions];
-        newQuestions[index].question = event.target.value;
-        setQuestions(newQuestions);
-    };
-
-    const handleAnswerChange = (index, event) => {
-        const newQuestions = [...questions];
-        newQuestions[index].answer = event.target.value;
-        setQuestions(newQuestions);
-    };
-
-    const onSubmit = async data => {
-        console.log(data)
-        await axios
-            .post("http://localhost:8000/api/lesson", {
-                title: data.title,
-                author: data.author,
-                discipline: data.discipline,
-                cycle: data.cycle,
-                description: data.description,
-                image: data.image,
-                date: Date.now(),
-                questions: data.questions
-            })
-            .then((res) => {
-                console.log(res);
-            },
-                (erreur) => {
-                    console.log(erreur);
-                }
-            );
-    }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} method='POST' className='lesson-form'>
-            
-            <label htmlFor="title">Titre de la leçon</label>
-            <input type="text" name="title" id="title" {...register('title', { required: "Vous devez entrer titre pour la leçon" })} />
-
-            <label htmlFor="author">Auteur</label>
-            <input type="text" name="author" id="author" {...register('author', { required: true })} />
-
-            <label htmlFor="discipline">Discipline</label>
-            <input type="text" name="discipline" id="discipline" {...register('discipline', { required: true })} />
-
-            <label htmlFor="cycle">Cycle</label>
-            <input type="text" name="cycle" id="cycle" {...register('cycle', { required: true })} />
-
-            <label htmlFor="description">Description succincte</label>
-            <textarea name="description" id="description" {...register('description', { required: true })}></textarea>
-
-            {questions.map((question, index) => (
-                <div key={index}>
-                    <label htmlFor={`question-${index}`}>Question {index} : </label>
-                    <input
-                        type="text"
-                        id={`question-${index}`}
-                        value={question.question}
-                        onChange={(event) => handleQuestionChange(index, event)}
-                    />
-                    <br />
-                    <label htmlFor={`answer-${index}`}>Réponse {index} : </label>
-                    <input
-                        type="text"
-                        id={`answer-${index}`}
-                        value={question.answer}
-                        onChange={(event) => handleAnswerChange(index, event)}
-                    />
-                </div>
-            ))}
-            <button type="button" onClick={handleAddQuestion}>Ajouter une question</button>
-            <button type="submit">Envoyer</button>
+        <form onSubmit={handleSubmit}>
+            <input
+                type="text"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                placeholder="Question"
+            />
+            <input
+                type="text"
+                value={option1}
+                onChange={(e) => setOption1(e.target.value)}
+                placeholder="Option 1"
+            />
+            <input
+                type="text"
+                value={option2}
+                onChange={(e) => setOption2(e.target.value)}
+                placeholder="Option 2"
+            />
+            <input
+                type="text"
+                value={option3}
+                onChange={(e) => setOption3(e.target.value)}
+                placeholder="Option 3"
+            />
+            <input
+                type="text"
+                value={option4}
+                onChange={(e) => setOption4(e.target.value)}
+                placeholder="Option 4"
+            />
+            <select value={answer} onChange={(e) => setAnswer(e.target.value)}>
+                <option value="">Choose the correct answer</option>
+                <option value={option1}>{option1}</option>
+                <option value={option2}>{option2}</option>
+                <option value={option3}>{option3}</option>
+                <option value={option4}>{option4}</option>
+            </select>
+            <button type='submit'>Valider</button>
         </form>
-    );
+    )
 }
 
 export default Test

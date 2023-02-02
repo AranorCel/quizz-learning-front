@@ -13,14 +13,12 @@ const Home = () => {
         axios
             .get("http://localhost:8000/api/lesson")
             .then(res => setLesson(res.data.lesson))
-
     }, [lesson]);
 
     useEffect(() => {
         axios
             .get("http://localhost:8000/api/quizz")
             .then(res => setQuizz(res.data.quizz))
-
     }, [quizz]);
 
     return (
