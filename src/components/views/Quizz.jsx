@@ -13,7 +13,7 @@ const Quizz = () => {
         axios
             .get("http://localhost:8000/api/quizz")
             .then(res => setQuizz(res.data.quizz))
-    }, []);
+    }, [quizz]);
 
     return (
         <>

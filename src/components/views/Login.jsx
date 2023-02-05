@@ -4,7 +4,7 @@ import { useLogin } from './useLogin';
 
 const Login = () => {
     // Expérimentation d'un customHook pour séparer l'état d'une part du rendu d'autre part
-    const { handleSubmit, email, setEmail, password, setPassword, error } = useLogin();
+    const { handleSubmit, email, setEmail, password, setPassword, error, teacher } = useLogin();
 
     return (
         <>

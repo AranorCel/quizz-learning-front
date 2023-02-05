@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 
 const SignUp = () => {
 
+    // Utilisation de la fonction register et useForm de hook-form plus performante pour la gestion des formulaires car on évite les réactualisations d'état pour chaque modification de chaque input.
     const { register, handleSubmit, reset } = useForm({ VerifFieldSignUp })
     const [error, setError] = useState("");
     const [status, setStatus] = useState(false);
@@ -25,7 +26,9 @@ const SignUp = () => {
                     lastname: data.lastname
                 })
             setStatus(true);
+            // Modification du message de statut de création de compte pour indiquer à l'utilisateur que cela a bien fonctionné.
             setStatusMessage("Compte créé");
+            // La fonction reset intégrée à hook-form assure la réinitialisation des champs à vide. utile ici sans redirection et évite une erreur si l'utilisateur clique plusieurs fois. l'API identifierait que l'adresse mail est déjà utlisée et renverrait donc l'erreur ci-après.
             reset();
 
         } catch (err) {
@@ -35,20 +38,26 @@ const SignUp = () => {
         }
     }
 
+    // Expérimentation d'un compteur de 5 secondes qui se déclenche automatiquement après la validation du formulaire d'inscription avant une redirection vers le login
     useEffect(() => {
+        // Définir une variable locale mutable "interval" à null
         let interval = null;
+        // Si compteur supérieur à 0 alors rafraichissement toutes les 1000 ms avec décrémentation de 1
         if (status && counter > 0) {
             interval = setInterval(() => {
                 setCounter(counter - 1);
             }, 1000);
         }
+        // Si compteur arrive à 0, on nettoie le composant et on effectue la redirection avec la méthode navigate de useNavigate()
         if (counter === 0) {
             clearInterval(interval)
             navigate("/login")
         }
+        // Optimisation du render avec vérification du changement de status et du counter. Si pas de changement, on n'exécutera pas l'effet ce qui optimise les performances.
         return () => { clearInterval(interval) }
     }, [status, counter])
 
+    // Si le statut est différent de sa valeur initiale alors il propose de s'enregistrer sinon, il lira le else suivant de validation / redirection.
     if (!status) return (
         <>
             <h1>S'enregistrer</h1>

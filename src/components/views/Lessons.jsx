@@ -13,7 +13,7 @@ const Lessons = () => {
         axios
             .get("http://localhost:8000/api/lesson")
             .then(res => setLesson(res.data.lesson))
-    }, []);
+    }, [lesson]);
 
     return (
         <>
