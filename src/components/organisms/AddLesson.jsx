@@ -5,6 +5,7 @@ import axios from 'axios'
 import { teacherState } from "../../store/Provider"
 import { useRecoilValue } from 'recoil'
 
+// Composant de création d'une leçon de type question / réponse avec possibilité d'ajouter plusieurs notions pour chaque leçon.
 const AddLesson = () => {
 
     const { register, handleSubmit } = useForm()

@@ -30,18 +30,13 @@ const Charte = () => {
                 </ul>
             </section>
             <section>
-                <h2>Droits et devoirs des actionnaires</h2>
-                <p>Les principaux droits :</p>
-                <p>Les principaux devoirs :</p>
-            </section>
-            <section>
-                <h2>Gouvernance</h2>
-            </section>
-            <section>
                 <h2>Publicité</h2>
-            </section>
-            <section>
-                <h2>Synthèses d'activité annuelles :</h2>
+                <p>Les publicités nous permettent :</p>
+                <ul>
+                    <li>de maintenir le site ainsi que son hébergement,</li>
+                    <li>de faire bénéficier aux utilisateurs d'un accès gratuit,</li>
+                    <li>de poursuivre le développement en ajoutant de nouvelles fonctionnalités.</li>
+                </ul>
             </section>
         </>
     )

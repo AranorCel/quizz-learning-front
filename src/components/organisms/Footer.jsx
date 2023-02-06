@@ -10,7 +10,7 @@ const Footer = () => {
                 <NavLink to="/charte">Charte du site</NavLink>
                 <NavLink to="/privacyPolicy">Politique de confidentialité</NavLink>
                 <NavLink to="/cookieManagement">Gestion des cookies</NavLink>
-                <NavLink to="/">Aide (FAQ)</NavLink>
+                <NavLink to="/aide">Aide (FAQ)</NavLink>
             </nav>
         </>
     )

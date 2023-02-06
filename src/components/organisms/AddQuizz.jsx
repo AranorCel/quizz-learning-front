@@ -5,6 +5,7 @@ import axios from 'axios'
 import { teacherState } from "../../store/Provider"
 import { useRecoilValue } from 'recoil'
 
+// Composant de création d'un quizz de type QCM avec possibilité de créer plusieurs QCM par quizz.
 const AddQuizz = () => {
 
     const { register, handleSubmit } = useForm()
@@ -18,35 +19,9 @@ const AddQuizz = () => {
         setQuizz([...quizz, { question: "", answer: "", choices: new Array(4).fill("") }]);
     };
 
+    // Avec register, il est possible de définir le format en sortie souhaité. Ici, le schéma retenu est composé des keys "question" et "choices". La key question est en lien avec une value au format String et la key choices est un tableau comprenant à la fois l'option (label) au format String et la réponse (check) au format boolean ce qui permet de gérer les réponses multiples.
     const onSubmit = async data => {
-        // Transformer un objet en tableau avec les clés ET les valeurs
-        console.log(data.response);
-        const items = Object.entries(data.response).map(field => {
-            // Séparer le numéro d'index du type (question/réponse/choix)
-            let [type, index, value] = [field[0].split("-"), field[1]].flat()
-            return { type: type, index: index, value: value }
-        })
-
-        // Initialiser un tableau en fonction du nombre de paire clé/valeur. Ici 6 (1 question, 1 réponse, 4 propositions)
-        const keyNumberQuizz = 6;
-        let itemsArray = Array(items.length / keyNumberQuizz).fill([])
-
-        // Fusionner les questions, les réponses et les choix dans un nouveau tableau avec leurs valeurs à partir d'un index unique
-        for (let i = 0; i < items.length; i++) {
-            const item = items[i];
-            console.log(item)
-            const index = parseInt(item.index);
-            console.log(index)
-            const type = item.type;
-            console.log(type)
-            const value = item.value;
-            console.log(value)
-            const arrayIndex = parseInt(index / keyNumberQuizz);
-            itemsArray[arrayIndex] = [...itemsArray[arrayIndex], [items[i].type, items[i].value]];
-        };
-
-        console.log(itemsArray);
-
+        
         try {
             const response = await axios
                 .post("http://localhost:8000/api/quizz", {
@@ -57,7 +32,7 @@ const AddQuizz = () => {
                     description: data.description,
                     image: data.image,
                     date: Date.now(),
-                    tests: itemsArray
+                    tests: data.quizz
                 });
         } catch (err) {
             setError(err?.message);
@@ -88,30 +63,30 @@ const AddQuizz = () => {
 
                     {quizz?.map((question, index) => (
                         <div key={index} className="choices-form">
-                            <label htmlFor={`question-${index}`}>Question {index} : </label>
+                            <label htmlFor={`question-${index}`}>Question {index+1} : </label>
                             <input
                                 type="text"
                                 id={`question-${index}`}
-                                {...register(`response.question-${index.toString().padStart(2, '0')}`)}
-                            />
-                            <div>
+                                {...register(`quizz[${index}].question`, { required: true })}/>
+                            <section>
                                 {question.choices.map((choice, i) => (
                                     <div key={i}>
-                                        <label htmlFor={`choice-${i}`}>Choix {i} : </label>
+                                        <label htmlFor={`choice-${i}`}>Choix {i+1} : </label>
                                         <input
                                             type="text"
-                                            id={`choice-${i}`}
-                                            {...register(`response.choice-${i.toString().padStart(2, '0')}`)}
+                                            id={`choiceLabel-${i}`}
+                                            {...register(`quizz[${index}].choices[${i}].label`, { required: true })}
                                         />
+                                        <label htmlFor={`choice-${i}`}>Cochez si la réponse est vraie : </label>
+                                        <input 
+                                            type="checkbox" 
+                                            id={`choiceCheck-${i}`} 
+                                            {...register(`quizz[${index}].choices[${i}].check`)}
+                                            />
                                     </div>
                                 ))}
-                            </div>
-                            <label htmlFor={`answer-${index}`}>Réponse {index} : </label>
-                            <input
-                                type="text"
-                                id={`answer-${index}`}
-                                {...register(`response.answer-${index.toString().padStart(2, '0')}`)}
-                            />
+                            </section>
+                            
                         </div>
                     ))}
                     <button type="button" onClick={handleAddQuestion}>Ajouter une question</button>

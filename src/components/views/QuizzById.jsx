@@ -7,12 +7,14 @@ import { useRecoilValue } from 'recoil'
 const QuizzById = () => {
 
     const { id } = useParams();
-    const [quizz, setQuizz] = useState([]);
+    const [quizz, setQuizz] = useState({});
     const [status, setStatus] = useState("Le quizz existe");
     const [open, setOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const navigate = useNavigate();
-    const isTeacher = useRecoilValue(teacherState)
+    const isTeacher = useRecoilValue(teacherState);
+    const [showButton, setShowButton] = useState(false);
+    const [checked, setChecked] = useState(new Array(4).fill(false));
 
     // Utilisation d'un useEffect pour l'affichage d'un quizz unique ciblé par son id ce qui optimise la réponse de l'API vers l'affichage puisqu'un seul quizz est envoyé. 
     useEffect(() => {
@@ -49,38 +51,66 @@ const QuizzById = () => {
         setOpen(false);
     };
 
+    const handleCheckboxChange = (index) => {
+        const newChecked = [...checked];
+        newChecked[index] = !newChecked[index];
+        setChecked(newChecked);
+        setShowButton(newChecked.some((isChecked) => isChecked));
+        console.log(newChecked)
+    };
+
     return (
         <>
-            <h2>{quizz.title}</h2>
-            <p>{quizz.description}</p>
+            <h2>{quizz?.title}</h2>
+            <p>{quizz?.description}</p>
             <div>
                 <button className="button" onClick={handlePrevious}>Précédent</button>
                 <button className="button" onClick={handleNext}>Suivant</button>
             </div>
             <div>
                 <section >
-                    {quizz.tests ? (
-                        <p>Question : {quizz?.tests[currentIndex][0][1]}</p>
+                    {quizz?.tests ? (
+                        <p>Question : {quizz?.tests[currentIndex].question}</p>
                     ) : ""}
                 </section>
                 <section >
-                    {quizz.tests ? (
+                    {quizz?.tests ? (
                         <>
-                            <p>Choix 1 : {quizz?.tests[currentIndex][2][1]}</p>
-                            <p>Choix 2 : {quizz?.tests[currentIndex][3][1]}</p>
-                            <p>Choix 3 : {quizz?.tests[currentIndex][4][1]}</p>
-                            <p>Choix 4 : {quizz?.tests[currentIndex][5][1]}</p>
+                            <p>Cochez la ou les bonnes réponses :</p>
+                            {quizz?.tests[currentIndex]?.choices?.map((label, i) => (
+                                <div key={i}>
+                                    <p>Choix {i + 1} : {quizz?.tests[currentIndex].choices[i].label}</p>
+                                    <input
+                                        type="checkbox"
+                                        onChange={() => handleCheckboxChange(i)}
+                                        checked={checked[i]}
+                                    />
+                                </div>
+                            ))}
                         </>
                     ) : ""}
-                </section>
-                <section >
-                    {quizz.tests ? (
-                        <p hidden>Réponse : {quizz?.tests[currentIndex][1][1]}</p>
-                    ) : ""}
+                    {showButton && (
+                        <button>Valider</button>
+                    )}
                 </section>
             </div>
             {isTeacher ? (
                 <>
+                    <div>
+                        <section >
+                            {quizz?.tests ? (
+                                <>
+                                <p>La (les) bonne(s) réponse(s) :</p>
+                                    {quizz?.tests[currentIndex]?.choices?.map((check, i) => (
+                                        <div key={i}>
+                                            <p>Choix {i + 1} : {quizz?.tests[currentIndex].choices[i].check}</p>
+                                        </div>
+                                    ))}
+                                </>
+                            ) : ""}
+                        </section>
+                    </div>
+
                     <div>
                         <button className="button">Éditer</button>
                     </div>
