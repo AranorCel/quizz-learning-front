@@ -1,20 +1,19 @@
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
 import axios from 'axios'
 import { teacherState } from "../../store/Provider"
 import { useRecoilValue } from 'recoil'
 
-// Composant de création d'une leçon de type question / réponse avec possibilité d'ajouter plusieurs notions pour chaque leçon.
+// Composant de création d'une leçon de type question / réponse avec possibilité d'ajouter plusieurs notions pour chaque leçon. Démarche itérative de transformation des tableaux et objets sans utiliser les fonctionnalités de register de hook-form (utilisation optimisée dans le composant AddQuizz).
 const AddLesson = () => {
 
     const { register, handleSubmit } = useForm()
     const [error, setError] = useState('');
     const [lessons, setLessons] = useState([{ question: "", answer: "" },]);
+    const cycle = ["Hors Cycle", "Cycle 1 : PS, MS, GS", "Cycle 2 : CP, CE1, CE2", "Cycle 3 : CM1, CM2, 6ème", "Cycle 4 : 5ème, 4ème, 3ème", "Cycle 5 : Seconde, Première, Terminale", "Cycle 6 ou Supérieur"];
     const navigate = useNavigate();
     const isTeacher = useRecoilValue(teacherState)
-
-    console.log(isTeacher)
 
     // Fonctionnalité permettant de créer des notions supplémentaires à la leçon
     const handleAddQuestion = () => {
@@ -67,16 +66,21 @@ const AddLesson = () => {
                 <form onSubmit={handleSubmit(onSubmit)} method='POST' className='lesson-form'>
 
                     <label htmlFor="title">Titre de la leçon</label>
-                    <input type="text" name="title" id="title" {...register('title', { required: "Vous devez entrer titre pour la leçon" })} />
+                    <input type="text" name="title" {...register('title', { required: "Vous devez entrer titre pour la leçon" })} />
 
                     <label htmlFor="author">Auteur</label>
-                    <input type="text" name="author" id="author" {...register('author', { required: true })} />
+                    <input type="text" name="author" {...register('author', { required: true })} />
 
                     <label htmlFor="discipline">Discipline</label>
-                    <input type="text" name="discipline" id="discipline" {...register('discipline', { required: true })} />
+                    <input type="text" name="discipline" {...register('discipline', { required: true })} />
 
                     <label htmlFor="cycle">Cycle</label>
-                    <input type="text" name="cycle" id="cycle" {...register('cycle', { required: true })} />
+                    <select name="cycle"
+                        {...register('cycle', { required: true })}>
+                        {cycle.map((c, i) => (
+                            <option key={i}>{c}</option>
+                        ))}
+                    </select>
 
                     <label htmlFor="description">Description succincte</label>
                     <textarea name="description" id="description" {...register('description', { required: true })}></textarea>
@@ -97,10 +101,12 @@ const AddLesson = () => {
                             />
                         </div>
                     ))}
-                    <button type="button" onClick={handleAddQuestion}>Ajouter une question</button>
-                    <button type="submit">Envoyer</button>
+                    <button type="button" onClick={handleAddQuestion} aria-label="Ajouter une nouvelle notion">Ajouter une notion</button>
+                    <button type="submit" aria-label="Valider la création de la leçon">Valider la leçon</button>
                 </form>
-            ) : ("Vous ne disposez pas des droits nécessaires")}
+            ) : (
+                <p>Vous ne disposez pas des droits nécessaires pour créer une leçon. Vous devez être un professeur et être connecté <NavLink to="/login" aria-label="Redirection vers la page de connexion">ici</NavLink>.</p>
+            )}
         </>
     );
 }

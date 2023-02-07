@@ -61,46 +61,50 @@ const QuizzById = () => {
 
     return (
         <>
-            <h2>{quizz?.title}</h2>
-            <p>{quizz?.description}</p>
-            <div>
-                <button className="button" onClick={handlePrevious}>Précédent</button>
-                <button className="button" onClick={handleNext}>Suivant</button>
-            </div>
-            <div>
-                <section >
-                    {quizz?.tests ? (
-                        <p>Question : {quizz?.tests[currentIndex].question}</p>
-                    ) : ""}
-                </section>
-                <section >
-                    {quizz?.tests ? (
-                        <>
-                            <p>Cochez la ou les bonnes réponses :</p>
-                            {quizz?.tests[currentIndex]?.choices?.map((label, i) => (
-                                <div key={i}>
-                                    <p>Choix {i + 1} : {quizz?.tests[currentIndex].choices[i].label}</p>
-                                    <input
-                                        type="checkbox"
-                                        onChange={() => handleCheckboxChange(i)}
-                                        checked={checked[i]}
-                                    />
-                                </div>
-                            ))}
-                        </>
-                    ) : ""}
-                    {showButton && (
-                        <button>Valider</button>
-                    )}
-                </section>
-            </div>
-            {isTeacher ? (
-                <>
-                    <div>
+            <div className='quizz'>
+                <h2>{quizz?.title}</h2>
+                <p>{quizz?.description}</p>
+                <div>
+                    <button className="button" onClick={handlePrevious}>Précédent</button>
+                    <button className="button" onClick={handleNext}>Suivant</button>
+                </div>
+                <div className='quizz-card'>
+                    <section >
+                        {quizz?.tests ? (
+                            <p><b>Question {currentIndex + 1} :</b> {quizz?.tests[currentIndex].question}</p>
+                        ) : ""}
+                    </section>
+                    <section className='quizz-questions'>
+                        {quizz?.tests ? (
+                            <div className="quizz-choices">
+                                <p>Cochez la ou les bonnes réponses :</p>
+                                
+                                {quizz?.tests[currentIndex]?.choices?.map((label, i) => (
+                                    <div className="quizz-choice" key={i}>
+                                        <input 
+                                            type="checkbox"
+                                            className='checkbox'
+                                            onChange={() => handleCheckboxChange(i)}
+                                            checked={checked[i]}
+                                        />
+                                        Choix {i + 1} : {quizz?.tests[currentIndex].choices[i].label}
+                                    </div>
+                                ))}
+                            </div>
+                        ) : ""}
+                    </section>
+                </div>
+
+                {showButton && (
+                    <button>Valider</button>
+                )}
+
+                {isTeacher ? (
+                    <>
                         <section >
                             {quizz?.tests ? (
                                 <>
-                                <p>La (les) bonne(s) réponse(s) :</p>
+                                    <p>La (les) bonne(s) réponse(s) :</p>
                                     {quizz?.tests[currentIndex]?.choices?.map((check, i) => (
                                         <div key={i}>
                                             <p>Choix {i + 1} : {quizz?.tests[currentIndex].choices[i].check}</p>
@@ -109,22 +113,19 @@ const QuizzById = () => {
                                 </>
                             ) : ""}
                         </section>
-                    </div>
 
-                    <div>
                         <button className="button">Éditer</button>
-                    </div>
 
-                    <div>
-                        <button className="button" onClick={handleClickOpen}>Supprimer</button>
                         <dialog className="dialog" open={open} onClose={handleClose}>
                             Confirmez la suppression
                             <button className="button dialog-cancel" onClick={handleClose}>Annuler</button>
                             <button className="button dialog-delete" onClick={handleDelete}>Supprimer</button>
                         </dialog>
-                    </div>
-                </>
-            ) : ("")}
+
+                        <button className="button" onClick={handleClickOpen}>Supprimer</button>
+                    </>
+                ) : ("")}
+            </div>
         </>
     )
 }

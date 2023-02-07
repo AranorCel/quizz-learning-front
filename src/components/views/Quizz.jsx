@@ -3,11 +3,14 @@ import axios from "axios"
 import { useState, useEffect } from 'react';
 import { NavLink } from "react-router-dom"
 import CardQuizz from '../molecules/CardQuizz';
+import { teacherState } from "../../store/Provider"
+import { useRecoilValue } from 'recoil'
 
 const Quizz = () => {
 
     const [quizz, setQuizz] = useState([])
     const [rangeValue, setRangeValue] = useState(0);
+    const isTeacher = useRecoilValue(teacherState);
 
     useEffect(() => {
         axios
@@ -16,15 +19,18 @@ const Quizz = () => {
     }, [quizz]);
 
     return (
-        <>
-            <p>Ajouter un <NavLink to="/addQuizz">quizz</NavLink></p>
+        <section className='presentation'>
+            <h1>Amusons-nous avec... les quizz !</h1>
 
-            <label>{quizz.length > 0 && `Nombre de quizz que vous souhaitez afficher entre 0 et ${quizz.length}`} : </label>
+            <p>Après l'apprentissage, il est désormais temps de passer aux tests pour consolider nos acquis ! A vos souris ! Comme pour les <NavLink to="/lessons" aria-label="Redirection vers la page des leçons">leçons</NavLink>, commencez par jouer avec le curseur, choisissez un quizz et c'est parti ! Testez vos compétences !</p>
+
+            <button><NavLink to="/addQuizz" aria-label="Redirection vers la page de création d'un quizz">Créer un quizz</NavLink></button>
 
             {quizz.length !== 0 &&
                 <>
+                    <p><b>Dépalcez le curseur </b> pour afficher des quizz. {rangeValue > 0 && "Bravo vous avez accès à"} {rangeValue} quizz.</p>
+
                     <input type="range" min="0" max={quizz.length} defaultValue={rangeValue} onChange={(e) => setRangeValue(e.target.value)} />
-                    <p>Vous affichez actuellement {rangeValue} quizz</p>
                 </>
             }
 
@@ -33,7 +39,7 @@ const Quizz = () => {
                     .slice(0, rangeValue)
                     .map((quizz, i) => <CardQuizz key={i} quizz={quizz} />)}
             </ul>
-        </>
+        </section>
     )
 }
 

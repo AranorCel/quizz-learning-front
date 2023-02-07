@@ -3,8 +3,8 @@ import React from 'react'
 const Charte = () => {
     return (
         <>
-            <h1>Charte d'éthique et de déontologie</h1>
-            <section>
+            <section className='presentation'>
+                <h1>Charte d'éthique et de déontologie</h1>
                 <h2>Préambule</h2>
                 <p>La présente Charte a pour objectif de rappeler les principes essentiels de fonctionnement du site :</p>
                 <ul>

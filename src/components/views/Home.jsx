@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from "axios"
 import { useState, useEffect } from 'react';
+import { NavLink } from "react-router-dom"
 import CardLesson from '../molecules/CardLesson';
 import CardQuizz from '../molecules/CardQuizz';
 
@@ -25,8 +26,18 @@ const Home = () => {
     // Affichage des 3 dernières leçons et des 3 derniers quizz créés.
     return (
         <>
-            <section>
-                <p>Les dernières leçons :</p>
+            <section className='presentation'>
+                <h1>Épicurieuses et épicurieux, bienvenue !</h1>
+                <p>Cet environnement de quizz-learning est participatif ! Merci aux créateurs de contenu que sont les professeurs, formateurs et délivreurs de connaissances ! Grâce à vous, le site comprend déjà {lesson.length} leçon{lesson.length > 1 && "s"} et {quizz.length} quizz.</p>
+
+                <p>Pour en profiter, c'est très simple ! Un visiteur ou un élève enregistré pourra consulter librement les leçons et quizz disponibles.</p>
+
+                <p>Pour créer du contenu, une leçon ou un quizz, il faut être un utilisateur enregistré. Pour plus d'informations, vous pouvez vous rapporter à notre page <NavLink to="/aide" aria-label="Redirection vers la page d'aide et des questions fréquemment posées">Aide (FAQ)</NavLink>. Belles découvertes !</p>
+
+            </section>
+
+            <section className='presentation'>
+                <h2>Les dernières leçons</h2>
                 <ul className='lesson-list'>
                     {lesson
                         .sort((a, b) => b - a)
@@ -34,8 +45,8 @@ const Home = () => {
                         .map((lesson, i) => <CardLesson key={i} lesson={lesson} />)}
                 </ul>
             </section>
-            <section>
-                <p>Les derniers quizz :</p>
+            <section className='presentation'>
+                <h2>Les derniers quizz</h2>
                 <ul className='quizz-list'>
                     {quizz
                         .sort((a, b) => b - a)

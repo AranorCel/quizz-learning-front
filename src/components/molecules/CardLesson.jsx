@@ -18,7 +18,9 @@ const CardLesson = ({ lesson }) => {
                 <p>Date : {lesson.date}</p>
                 <p>Auteur : {lesson.author}</p>
                 <div className='details'>
-                    <NavLink to={`/lesson/${lesson._id}`}>Voir cette leçon</NavLink>
+                    <button>
+                        <NavLink to={`/lesson/${lesson._id}`} aria-label="Redirection vers la leçon ciblée">Voir cette leçon</NavLink>
+                    </button>
                 </div>
             </li>
         </>

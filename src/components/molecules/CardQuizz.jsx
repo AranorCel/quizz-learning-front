@@ -18,7 +18,9 @@ const CardQuizz = ({ quizz }) => {
                 <p>Date : {quizz.date}</p>
                 <p>Auteur : {quizz.author}</p>
                 <div className='details'>
-                    <NavLink to={`/quizz/${quizz._id}`}>Voir ce quizz</NavLink>
+                    <button >
+                        <NavLink to={`/quizz/${quizz._id}`} aria-label="Redirection vers le quizz ciblé">Voir ce quizz</NavLink>
+                    </button>
                 </div>
             </li>
         </>

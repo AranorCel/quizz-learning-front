@@ -21,7 +21,7 @@ const LessonById = () => {
             .then(res => setLesson(res.data.lesson))
     }, [id]);
 
-     // Possibilité de supprimer la leçon. Fenêtre de validation avant suppression définitive de la DB ce qui limite la suppression accidentelle. Puis, redirection vers la page commune des leçons ce qui permet de voir les leçons restantes ou d'en créer immédiatemment une nouvelle.
+    // Possibilité de supprimer la leçon. Fenêtre de validation avant suppression définitive de la DB ce qui limite la suppression accidentelle. Puis, redirection vers la page commune des leçons ce qui permet de voir les leçons restantes ou d'en créer immédiatemment une nouvelle.
     const handleDelete = async () => {
         await axios
             .delete(`http://localhost:8000/api/lesson/${id}`)
@@ -49,42 +49,45 @@ const LessonById = () => {
         setOpen(false);
     };
 
+    // Afficher une nouvelle notion par une "carte" recto/verso qui présente la question. L'apprenant essaye alors d'y répondre. Il vérifie si sa réponse est bonne en déplaçant le curseur de la souris sur la "carte". Il peut ainsi réfléchir avant de voir la solution et de manière interactive sans cliquer sur un bouton "Montre moi la réponse".
     return (
         <>
-            <h2>{lesson.title}</h2>
-            <p>{lesson.description}</p>
-            <div>
-                <button className="button" onClick={handlePrevious}>Précédent</button>
-                <button className="button" onClick={handleNext}>Suivant</button>
-            </div>
-            <div className='card-flip'>
-                <section className='card-front'>
-                    {lesson.knowledges ? (
-                        <p>Question : {lesson?.knowledges[currentIndex]?.question}</p>
-                    ) : ""}
-                </section>
-                <section className='card-back'>
-                    {lesson.knowledges ? (
-                        <p>Réponse : {lesson?.knowledges[currentIndex]?.answer}</p>
-                    ) : ""}
-                </section>
-            </div>
+            <div className='lesson'>
+                <h2>{lesson.title}</h2>
+                <p>{lesson.description}</p>
+                <div>
+                    <button className="button" onClick={handlePrevious}>Précédent</button>
+                    <button className="button" onClick={handleNext}>Suivant</button>
+                </div>
+                <div className='card-flip'>
+                    <section className='card-front'>
+                        {lesson.knowledges ? (
 
-            {isTeacher ? (
-                <>
-                    <div>
+                            <p><b>Question {currentIndex + 1} :</b> {lesson?.knowledges[currentIndex]?.question}</p>
+                        ) : ""}
+                    </section>
+                    <section className='card-back'>
+                        {lesson.knowledges ? (
+                            <p><b>Réponse {currentIndex + 1} :</b> {lesson?.knowledges[currentIndex]?.answer}</p>
+                        ) : ""}
+                    </section>
+                </div>
+
+
+                {isTeacher ? (
+                    <>
                         <button className="button">Éditer</button>
-                    </div>
-                    <div>
-                        <button className="button" onClick={handleClickOpen}>Supprimer</button>
+
                         <dialog className="dialog" open={open} onClose={handleClose}>
                             Confirmez la suppression
                             <button className="button dialog-cancel" onClick={handleClose}>Annuler</button>
                             <button className="button dialog-delete" onClick={handleDelete}>Supprimer</button>
                         </dialog>
-                    </div>
-                </>
-            ) : ("")}
+
+                        <button className="button" onClick={handleClickOpen}>Supprimer</button>
+                    </>
+                ) : ("")}
+            </div>
         </>
     )
 }

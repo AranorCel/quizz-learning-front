@@ -59,7 +59,7 @@ const SignUp = () => {
 
     // Si le statut est différent de sa valeur initiale alors il propose de s'enregistrer sinon, il lira le else suivant de validation / redirection.
     if (!status) return (
-        <>
+        <section className='presentation'>
             <h1>S'enregistrer</h1>
             <form onSubmit={handleSubmit(onSubmit)} method='POST' className='login-teacher'>
 
@@ -78,18 +78,17 @@ const SignUp = () => {
 
                 <button onSubmit={handleSubmit(onSubmit)}>S'enregistrer</button>
             </form>
-        </>
+        </section>
     )
 
     else return (
-        <>
+        <section className='presentation'>
             {statusMessage && <p>{statusMessage}</p>}
             <h1>Merci pour votre inscription et bienvenue sur Quizz Learning !</h1>
-            <section>
+            <div>
                 <p>{`Vous allez être redirigés automatiquement vers la page de Connexion dans ${counter} seconde${(counter > 1) ? "s" : ""}.`}</p>
-            </section>
-
-        </>
+            </div>
+        </section>
     )
 }
 

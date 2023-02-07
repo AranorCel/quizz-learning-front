@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil"
 import { teacherState, authState } from "../../store/Provider"
 
 const Logout = () => {
-    
+
     const [teacher, setTeacher] = useRecoilState(teacherState)
     const [auth, setAuth] = useRecoilState(authState)
     const navigate = useNavigate();
@@ -26,11 +26,11 @@ const Logout = () => {
     };
 
     return (
-        <>
+        <section className='presentation'>
             <p>Êtes-vous sûrs de vouloir vous déconnecter ?</p>
             <button type='submit' onClick={handleLogout}>Oui</button>
             <button type='submit' onClick={cancel}>Non</button>
-        </>
+        </section>
     )
 }
 

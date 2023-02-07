@@ -3,11 +3,14 @@ import axios from "axios"
 import { useState, useEffect } from 'react';
 import CardLesson from '../molecules/CardLesson';
 import { NavLink } from "react-router-dom"
+import { teacherState } from "../../store/Provider"
+import { useRecoilValue } from 'recoil'
 
 const Lessons = () => {
 
     const [lesson, setLesson] = useState([])
     const [rangeValue, setRangeValue] = useState(0);
+    const isTeacher = useRecoilValue(teacherState);
 
     useEffect(() => {
         axios
@@ -16,15 +19,20 @@ const Lessons = () => {
     }, [lesson]);
 
     return (
-        <>
-            <p>Ajouter une <NavLink to="/addLesson">leçon</NavLink></p>
+        <section className='presentation'>
+            <h1>Commençons par... les leçons !</h1>
 
-            <label>{lesson.length > 0 && `Nombre de leçons que vous souhaitez afficher entre 0 et ${lesson.length}`} : </label>
+            <p>Il faut bien débuter par quelque chose et nous vous proposons d'apprendre en nous amusant grâce à un modèle interactif. Jouez avec le curseur, choisissez une leçon et c'est parti ! Vous pourrez apprendre une nouvelle notion et vérifier le résultat en passant simplement votre curseur sur la question. Simple et efficace ! Quand vous vous sentirez prêts, nous passerons aux choses sérieuses en parcourant les quizz !</p>
+
+            <button><NavLink to="/addLesson" aria-label="Redirection vers la page de création d'une leçon">Créer une leçon</NavLink></button>
 
             {lesson.length !== 0 &&
                 <>
+                    <p><b>Dépalcez le curseur </b> pour afficher des leçons. {rangeValue > 0 && "Bravo vous avez accès à"} {rangeValue} leçon{rangeValue > 1 && "s !"}</p>
+
+                    <p>{rangeValue > 0 ? `Bravo vous avez accès à${rangeValue} leçon`:""}</p>
+
                     <input type="range" min="0" max={lesson.length} defaultValue={rangeValue} onChange={(e) => setRangeValue(e.target.value)} />
-                    <p>Vous affichez actuellement {rangeValue} leçon{rangeValue > 1 && "s"}</p>
                 </>
             }
 
@@ -33,7 +41,8 @@ const Lessons = () => {
                     .slice(0, rangeValue)
                     .map((lesson, i) => <CardLesson key={i} lesson={lesson} />)}
             </ul>
-        </>
+
+        </section>
     )
 }
 
