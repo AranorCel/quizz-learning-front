@@ -43,12 +43,12 @@ const QuizzById = () => {
         navigate("/quizz");
     }
 
-    const handleUpdate = async () => {
-        await axios
-            .put(`http://localhost:8000/api/lesson/${id}`)
-            .then(() => setStatus("Le quizz est modifié"))
+    const handleUpdate = () => {
+        navigate("/addQuizz", {state : quizz});
         handleCloseToUpdate();
-        navigate("/quizz");
+        /* await axios
+            .put(`http://localhost:8000/api/lesson/${id}`)
+            .then(() => setStatus("Le quizz est modifié")) */
     }
 
     // Navigation entre les questions du quizz avec la question suivante et bouclage infini haut et bas avec le modulo. Ici, il s'agit d'accéder à la question suivante.
@@ -107,7 +107,7 @@ const QuizzById = () => {
                     <section >
                         <p>Votre avancement sur le quizz : <progress max={quizz?.tests?.length} value={currentIndex + 1}></progress></p>
                         {quizz?.tests ? (
-                            <p><b>Question {currentIndex + 1} :</b> {quizz?.tests[currentIndex].question}</p>
+                            <p><b>Question {currentIndex + 1} :</b> {quizz?.tests[currentIndex]?.question}</p>
                         ) : ""}
                     </section>
                     <section className='quizz-questions'>
@@ -142,7 +142,6 @@ const QuizzById = () => {
                     </section>
                 </div>
             )}
-
 
             {finish && <p>Votre résultat pour ce quizz est {results}/{quizz.tests.length}</p>
             }

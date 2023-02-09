@@ -345,3 +345,7 @@ button a:hover {
     background-color: var(--validate-theme-color);
     color: var(--text-nav-color);
 }
+
+.home {
+    background: url("../icons/home.svg");
+}

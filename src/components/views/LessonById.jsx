@@ -33,12 +33,12 @@ const LessonById = () => {
         navigate("/lessons");
     }
 
-    const handleUpdate = async () => {
-        await axios
-            .put(`http://localhost:8000/api/lesson/${id}`)
-            .then(() => setStatus("La leçon est modifiée"))
+    const handleUpdate = () => {
+        navigate("/addLesson", {state : lesson});
         handleCloseToUpdate();
-        navigate("/lessons");
+       /*  await axios
+            .put(`http://localhost:8000/api/lesson/${id}`)
+            .then(() => setStatus("La leçon est modifiée")) */
     }
 
     // Navigation entre les points de la leçon avec la question suivante et bouclage infini haut et bas avec le modulo. Ici, il s'agit d'accéder à la question suivante.

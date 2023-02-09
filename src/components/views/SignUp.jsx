@@ -79,7 +79,7 @@ const SignUp = () => {
                     autoComplete="current-password"
                     {...register('password',
                         { required: true })} />
-                <div onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                <div onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }} className="eye">
                     {showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
                 </div>
 
