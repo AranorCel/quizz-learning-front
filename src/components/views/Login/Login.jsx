@@ -4,32 +4,32 @@ import { useLogin } from './useLogin';
 
 const Login = () => {
     // Expérimentation d'un customHook pour séparer l'état d'une part du rendu d'autre part
-    const { handleSubmit, email, setEmail, password, setPassword, error, setShowPassword, showPassword } = useLogin();
+    const { handleSubmit, onSubmit, errors, register, error, setError, setShowPassword, showPassword } = useLogin();
 
     return (
         <section className='presentation'>
             <h1>Se connecter</h1>
-            <form onSubmit={handleSubmit} className="login-teacher">
+            <form onSubmit={handleSubmit(onSubmit)} className="login-teacher">
                 <label htmlFor="email">Votre email</label>
                 <input
-                    type="email"
                     name="email"
                     autoComplete="current-email"
-                    onChange={(e) => setEmail(e.target?.value)}
-                    required
+                    {...register('email')}
                 />
+                {errors.email && <p className='yup-error'>{errors.email.message}</p>}
+
                 <label htmlFor="password">Votre mot de passe</label>
                 <input
                     type={showPassword ? "text" : "password"}
-                    name="password" 
-                    autoComplete="current-password"
-                    onChange={(e) => setPassword(e.target?.value)}
-                    required
+                    name="password"
+                    {...register('password')}
                 />
                 <div onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
                     {showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
                 </div>
-                {error && <p>{error}</p>}
+                {errors.password && <p className='yup-error'>{errors.password.message}</p>}
+
+                {error && <p className='yup-error'>{error}</p>}
                 <button type="submit" aria-label="Se connecter">Se connecter</button>
             </form>
             <p>

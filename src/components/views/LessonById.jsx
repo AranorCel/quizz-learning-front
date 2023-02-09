@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { teacherState } from "../../store/Provider"
 import { useRecoilValue } from 'recoil'
@@ -34,11 +34,8 @@ const LessonById = () => {
     }
 
     const handleUpdate = () => {
-        navigate("/addLesson", {state : lesson});
+        navigate("/addLesson", { state: lesson });
         handleCloseToUpdate();
-       /*  await axios
-            .put(`http://localhost:8000/api/lesson/${id}`)
-            .then(() => setStatus("La leçon est modifiée")) */
     }
 
     // Navigation entre les points de la leçon avec la question suivante et bouclage infini haut et bas avec le modulo. Ici, il s'agit d'accéder à la question suivante.
@@ -69,7 +66,7 @@ const LessonById = () => {
         setOpenToUpdate(false);
     };
 
-    // Afficher une nouvelle notion par une "carte" recto/verso qui présente la question. L'apprenant essaye alors d'y répondre. Il vérifie si sa réponse est bonne en déplaçant le curseur de la souris sur la "carte". Il peut ainsi réfléchir avant de voir la solution et de manière interactive sans cliquer sur un bouton "Montre moi la réponse".
+    // Afficher une nouvelle notion par une "carte" recto/verso qui présente la question. L'apprenant essaye alors d'y répondre. Il vérifie si sa réponse est bonne en déplaçant le curseur de la souris sur la "carte". Il peut ainsi réfléchir avant de voir la solution et de manière interactive sans cliquer sur un bouton "Montre moi la réponse". Il est possible de parcourir en boucle les notions. 
     return (
         <>
             <div className='lesson'>
@@ -92,6 +89,11 @@ const LessonById = () => {
                     </section>
                 </div>
 
+                {(currentIndex + 1 === lesson?.knowledges?.length) && (
+                    <section className='final-card'>
+                        <p>Bravo ! Vous avez terminé cette leçon. Vous pouvez continuer de parcourir les notions ou en découvrir de nouvelles en cliquant <NavLink to="/lessons" aria-label="Redirection vers la page des leçons">ici</NavLink> !</p>
+                    </section>
+                )}
 
                 {isTeacher ? (
                     <div className='creator-card'>

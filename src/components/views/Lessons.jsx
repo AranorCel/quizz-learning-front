@@ -7,15 +7,16 @@ import { NavLink } from "react-router-dom";
 
 const Lessons = () => {
 
-    const [lesson, setLesson] = useState([])
+    const [lesson, setLesson] = useState(null)
     const [rangeValue, setRangeValue] = useState(0);
 
     useEffect(() => {
-        if (lesson.length === 0) {
-        axios
-            .get("http://localhost:8000/api/lesson")
-            .then(res => setLesson(res.data.lesson))
+        if (lesson === null) {
+            axios
+                .get("http://localhost:8000/api/lesson")
+                .then(res => setLesson(res.data.lesson))
         }
+
     }, [lesson]);
 
     return (
@@ -24,19 +25,19 @@ const Lessons = () => {
 
             <p>Il faut bien débuter par quelque chose et nous vous proposons d'apprendre en nous amusant grâce à un modèle interactif. Jouez avec le curseur, choisissez une leçon et c'est parti ! Vous pourrez apprendre une nouvelle notion et vérifier le résultat en passant simplement votre curseur sur la question. Simple et efficace ! Quand vous vous sentirez prêts, nous passerons aux choses sérieuses en parcourant les quizz !</p>
 
-            {lesson.length !== 0 &&
+            {(lesson !== null && lesson?.length !== 0) &&
                 <>
-                    <p><b>Dépalcez le curseur </b> pour afficher des leçons. {rangeValue > 0 ? `Bravo vous avez accès à ${rangeValue} leçon`:""}{rangeValue > 1 && "s."}</p>
+                    <p><b>Dépalcez le curseur </b> pour afficher des leçons. {rangeValue > 0 ? `Bravo vous avez accès à ${rangeValue} leçon` : ""}{rangeValue > 1 && "s."}</p>
 
                     <input type="range" min="0" max={lesson.length} defaultValue={rangeValue} onChange={(e) => setRangeValue(e.target.value)} />
+
+                    <ul className='lesson-list'>
+                        {lesson
+                            .slice(0, rangeValue)
+                            .map((lesson, i) => <CardLesson key={i} lesson={lesson} />)}
+                    </ul>
                 </>
             }
-
-            <ul className='lesson-list'>
-                {lesson
-                    .slice(0, rangeValue)
-                    .map((lesson, i) => <CardLesson key={i} lesson={lesson} />)}
-            </ul>
 
         </section>
     )

@@ -2,7 +2,7 @@ import React from 'react'
 
 const CookieManagement = () => {
     return (
-        <section className='presentation'>
+        <section className='support'>
             <h1>Politique de gestion des cookies</h1>
             <h2>Enjeux</h2>
             <p>La présente politique de gestion des cookies a pour objectif de rappeler les principaux enjeux liés à leur utilisation :</p>

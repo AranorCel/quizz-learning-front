@@ -2,7 +2,7 @@ import React from 'react'
 
 const Charte = () => {
     return (
-        <div className='presentation'>
+        <div className='support'>
             <section>
                 <h1>Charte d'éthique et de déontologie</h1>
                 <h2>Préambule</h2>

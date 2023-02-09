@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const VerifField = yup.object({
+const VerifFieldQuizz = yup.object({
     title: yup
         .string('Titre incorrect')
         .matches(/^[\w -]{3,}$/, 'Titre incorrect')
@@ -15,4 +15,4 @@ const VerifField = yup.object({
         .required('Discipline obligatoire'),
 }).required();
 
-export default VerifField
+export default VerifFieldQuizz

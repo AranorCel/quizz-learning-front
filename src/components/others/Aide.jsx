@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 const Aide = () => {
     return (
-        <section className='presentation'>
+        <section className='support'>
             <h1>FAQ</h1>
             <h2>Questions fréquemment posées</h2>
             <p>Liste des principales questions rencontrées :</p>

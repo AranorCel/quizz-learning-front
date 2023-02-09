@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"
 
 const Mentions = () => {
     return (
-        <div className='presentation'>
+        <div className='support'>
             <h1>Mentions légales</h1>
             <section>
                 <h2>Informations légales</h2>

@@ -2,7 +2,7 @@ import React from 'react'
 
 const PrivacyPolicy = () => {
     return (
-        <section className='presentation'>
+        <section className='support'>
             <h1>Politique de confidentialité</h1>
             <ul>
                 <li>Collecte de données : Le site ne collecte que les informations nécessaires pour fournir ses services, telles que les informations de compte, les préférences et les commentaires.</li>

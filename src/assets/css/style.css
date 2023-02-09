@@ -10,7 +10,7 @@
     --secondary-theme-color: rgb(159, 220, 244);
     --card-theme-color: rgb(248, 229, 198);
     --shadow-theme-color: rgb(217, 218, 219);
-    --active-theme-color: gold;
+    --active-theme-color: rgb(255, 215, 0);
 }
 
 /*** GLOBAL ***/
@@ -40,6 +40,19 @@ body {
     color: var(--text-body-color);
 }
 
+#root {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+
 /** Gestion du format mobile first **/
 @media only screen and (max-width: 640px) {
     body {
@@ -50,6 +63,11 @@ body {
 }
 
 .presentation {
+    padding: 2rem;
+    text-align: center;
+}
+
+.support {
     padding: 2rem;
 }
 
@@ -174,7 +192,8 @@ header .active {
     justify-content: center;
 }
 
-.quizz-card {
+.quizz-card,
+.final-card {
     margin: 2rem;
     padding: 1rem;
     width: 40vw;
@@ -348,4 +367,10 @@ button a:hover {
 
 .home {
     background: url("../icons/home.svg");
+}
+
+/** ERRORS **/
+.yup-error {
+    color: tomato;
+    text-align: center;
 }

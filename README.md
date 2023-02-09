@@ -26,8 +26,6 @@ J'ai fait le choix de scinder le projet en deux et d'utiliser l'outil GitHub :
 
 - Les deux parties "frontend" et "backend-js" sont pourvues de dossiers .gitignore évitant notamment la copie des node_modules. Elles sont également dotées automatiquement des fichiers package.json dont le détail des dependencies est noté [ci-après](#Dependencies).
 
-- 
-
 ## Instructions d'installation et de déploiement
 
 ### `npm i`
@@ -66,7 +64,7 @@ Pour le "backend-js" :
 - formidable : --> Utilisation initiale pour faciliter la gestion des formulaires et des téléchargements de fichiers. Module remplacé par multer en cours de développement.
 - fs : Pour intéragir avec le système de fichier de l'OS permettant de lire, écrire, supprimer, déplacer, copier sur le disque dur.
 - mongoose : Pour intéragir avec la DB MongoDB et permettant de faire un CRUD sur la DB mais également l'élaboration de schémas et la génération de modèles pour les collections. Il protège également les DB d'attaques malveillantes (validation, échappement, limitation et autorisations)
-- multer : Pour faciliter la gestion des téléchargements de fichiers. Il intègre également la validation des fichiers téléchargés (taille maximale, extension, fichiers multiples) avec la possibilité de stocker sur le disque dur ou en mémoire.
+- multer : Pour faciliter la gestion des téléchargements de fichiers. Il intègre également la validation des fichiers téléchargés (taille maximale, extension, fichiers multiples) avec la possibilité de stocker sur le disque dur ou en mémoire. En cours de développement dans la V2.
 - nodemon : Pour redémarrer automatiquement NodeJS dès qu'une modification est apportée.
 
 Pour le "frontend" :
@@ -80,4 +78,4 @@ Pour le "frontend" :
 
 ## Version du README
 
-Il s'agit de la V1 du README datée du 31/01/2023.
+Il s'agit de la V1.1 du README datée du 09/02/2023.

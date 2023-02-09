@@ -44,11 +44,8 @@ const QuizzById = () => {
     }
 
     const handleUpdate = () => {
-        navigate("/addQuizz", {state : quizz});
+        navigate("/addQuizz", { state: quizz });
         handleCloseToUpdate();
-        /* await axios
-            .put(`http://localhost:8000/api/lesson/${id}`)
-            .then(() => setStatus("Le quizz est modifié")) */
     }
 
     // Navigation entre les questions du quizz avec la question suivante et bouclage infini haut et bas avec le modulo. Ici, il s'agit d'accéder à la question suivante.
@@ -98,6 +95,7 @@ const QuizzById = () => {
 
     }
 
+    // Affichage du quizz comprenant chacun, une question, des choix à cocher. Une fois arrivé à la dernière question
     return (
         <div className='quizz'>
             <h2>{quizz?.title}</h2>
@@ -133,6 +131,7 @@ const QuizzById = () => {
                             <button className="button" onClick={handlePrevious}>Précédent</button>
                             <button className="button" onClick={handleNext}>Suivant</button>
                         </div>
+
                         {(currentIndex + 1 === quizz?.tests?.length) && (
                             <>
                                 <p>C'est la dernière question, vous pouvez revenir en arrière avant de valider !</p>
@@ -140,6 +139,7 @@ const QuizzById = () => {
                             </>
                         )}
                     </section>
+
                 </div>
             )}
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
-import { useNavigate, NavLink, useLocation } from "react-router-dom"
+import { useNavigate, NavLink, useLocation, useParams } from "react-router-dom"
 import axios from 'axios'
 import { teacherState } from "../../store/Provider"
 import { useRecoilValue } from 'recoil'
@@ -12,11 +12,12 @@ import schema from "../../assets/templates/VerifFieldQuizz"
 const AddQuizz = () => {
 
     const navigate = useNavigate();
-    const {state} = useLocation();
+    const { state } = useLocation();
     const defaultValues = state || {};
-    const { register, handleSubmit, formState: { errors } } = useForm({defaultValues});
+    const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues });
     const [error, setError] = useState('');
     const [tests, setTests] = useState([{ question: "", answer: "", choices: new Array(4).fill({ label: "", check: false }) },]);
+    const [status, setStatus] = useState("La leçon existe");
     const isTeacher = useRecoilValue(teacherState);
 
     // Fonctionnalité permettant de créer des questions supplémentaires au quizz 
@@ -26,16 +27,29 @@ const AddQuizz = () => {
 
     // Avec register, il est possible de définir le format en sortie souhaité. Ici, le schéma retenu est composé des keys "question" et "choices". La key question est en lien avec une value au format String et la key choices est un tableau comprenant à la fois l'option (label) au format String et la réponse (check) au format boolean ce qui permet de gérer les réponses multiples.
     const onSubmit = async data => {
-        console.log(data)
-        try {
+        if (!state) {
+            try {
 
-            const response = await axios
-                .post("http://localhost:8000/api/quizz", {
-                    ...data,
-                    date: Date.now(),
-                });
-        } catch (err) {
-            setError(err?.message);
+                const response = await axios
+                    .post("http://localhost:8000/api/quizz", {
+                        ...data,
+                        date: new Date().toLocaleDateString("fr"),
+                    })
+                    .then(() => setStatus("Le quizz est créé"));
+            } catch (err) {
+                setError(err?.message);
+            }
+        } else {
+            try {
+                const update = await axios
+                    .put(`http://localhost:8000/api/quizz/${state._id}`, {
+                        ...data,
+                        date: new Date().toLocaleDateString("fr"),
+                    })
+                    .then(() => setStatus("Le quizz est modifié"));
+            } catch (err) {
+                setError(err?.message);
+            }
         }
         navigate("/quizz")
     }
@@ -94,7 +108,12 @@ const AddQuizz = () => {
                         </div>
                     ))}
                     <button type="button" onClick={handleAddQuestion} aria-label="Ajouter une nouvelle question">Ajouter une question</button>
-                    <button type="submit" aria-label="Valider la création du quizz">Valider le quizz</button>
+
+                    {!state ? (
+                        <button type="submit" aria-label="Valider la création de la leçon">Valider la leçon</button>
+                    ) : (
+                        <button type="submit" aria-label="Valider la création de la leçon">Éditer la leçon</button>
+                    )}
                 </form>
             ) : (
                 <section className='presentation'>

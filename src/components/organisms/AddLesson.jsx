@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
-import { useNavigate, NavLink, useLocation } from "react-router-dom"
+import { useNavigate, NavLink, useLocation, useParams } from "react-router-dom"
 import axios from 'axios'
 import { teacherState } from "../../store/Provider"
 import { useRecoilValue } from 'recoil'
@@ -10,11 +10,12 @@ import { cycle } from '../../assets/data/Cycle'
 const AddLesson = () => {
 
     const navigate = useNavigate();
-    const {state} = useLocation();
+    const { state } = useLocation();
     const defaultValues = state || {};
-    const { register, handleSubmit, formState: { errors } } = useForm({defaultValues});
+    const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues });
     const [error, setError] = useState('');
     const [lessons, setLessons] = useState(state ? state.knowledges : [{ question: "", answer: "" },]);
+    const [status, setStatus] = useState("La leçon existe");
     const isTeacher = useRecoilValue(teacherState);
 
     // Fonctionnalité permettant de créer des notions supplémentaires à la leçon
@@ -22,16 +23,31 @@ const AddLesson = () => {
         setLessons([...lessons, { question: "", answer: "" }]);
     };
 
-    const onSubmit = async data => {
 
-        try {
-            const response = await axios
-                .post("http://localhost:8000/api/lesson", {
-                    ...data,
-                    date: Date.now(),
-                });
-        } catch (err) {
-            setError(err?.message);
+    const onSubmit = async data => {
+        if (!state) {
+            try {
+                const response = await axios
+                    .post("http://localhost:8000/api/lesson", {
+                        ...data,
+                        date: new Date().toLocaleDateString("fr"),
+                    })
+                    .then(() => setStatus("La leçon est créée"));
+            } catch (err) {
+                setError(err?.message);
+            }
+        } else {
+            try {
+                //
+                const update = await axios
+                    .put(`http://localhost:8000/api/lesson/${state._id}`, {
+                        ...data,
+                        date: new Date().toLocaleDateString("fr"),
+                    })
+                    .then(() => setStatus("La leçon est modifiée"));
+            } catch (err) {
+                setError(err?.message);
+            }
         }
         navigate("/lessons")
     }
@@ -79,7 +95,12 @@ const AddLesson = () => {
                         </div>
                     ))}
                     <button type="button" onClick={handleAddQuestion} aria-label="Ajouter une nouvelle notion">Ajouter une notion</button>
-                    <button type="submit" aria-label="Valider la création de la leçon">Valider la leçon</button>
+
+                    {!state ? (
+                        <button type="submit" aria-label="Valider la création de la leçon">Valider la leçon</button>
+                    ) : (
+                        <button type="submit" aria-label="Valider la création de la leçon">Éditer la leçon</button>
+                    )}
                 </form>
             ) : (
                 <section className='presentation'>

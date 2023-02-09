@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import VerifFieldSignUp from '../../assets/templates/VerifFieldSignUp';
 import { useEffect } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup'
 
 const SignUp = () => {
 
     // Utilisation de la fonction register et useForm de hook-form plus performante pour la gestion des formulaires car on évite les réactualisations d'état pour chaque modification de chaque input.
-    const { register, handleSubmit, reset } = useForm({ VerifFieldSignUp })
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(VerifFieldSignUp) })
     const [error, setError] = useState("");
     const [status, setStatus] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
@@ -66,36 +67,35 @@ const SignUp = () => {
 
                 <label htmlFor="email">Votre email</label>
                 <input
-                    type="email"
                     name="email"
-                    {...register('email',
-                        { required: "Vous devez entrer une adresse mail valide" })} />
-                {error && <p>{error}</p>}
+                    {...register('email')} />
+                {error && <p className='yup-error'>{error}</p>}
+                {errors.email && <p className='yup-error'>{errors.email.message}</p>}
 
                 <label htmlFor="password">Votre mot de passe</label>
                 <input
                     type={showPassword ? "text" : "password"}
                     name="password"
                     autoComplete="current-password"
-                    {...register('password',
-                        { required: true })} />
+                    {...register('password')} />
                 <div onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }} className="eye">
                     {showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
                 </div>
+                {errors.password && <p className='yup-error'>{errors.password.message}</p>}
 
                 <label htmlFor="firstname">Votre prénom</label>
                 <input
                     type="text"
                     name="firstname"
-                    {...register('firstname',
-                        { required: true })} />
+                    {...register('firstname')} />
+                {errors.firstname && <p className='yup-error'>{errors.firstname.message}</p>}
 
                 <label htmlFor="lastname">Votre nom de famille</label>
                 <input
                     type="text"
                     name="lastname"
-                    {...register('lastname',
-                        { required: true })} />
+                    {...register('lastname')} />
+                {errors.lastname && <p className='yup-error'>{errors.lastname.message}</p>}
 
                 <button onSubmit={handleSubmit(onSubmit)}>S'enregistrer</button>
             </form>
