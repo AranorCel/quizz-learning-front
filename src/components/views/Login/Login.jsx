@@ -4,7 +4,7 @@ import { useLogin } from './useLogin';
 
 const Login = () => {
     // Expérimentation d'un customHook pour séparer l'état d'une part du rendu d'autre part
-    const { handleSubmit, email, setEmail, password, setPassword, error } = useLogin();
+    const { handleSubmit, email, setEmail, password, setPassword, error, setShowPassword, showPassword } = useLogin();
 
     return (
         <section className='presentation'>
@@ -13,19 +13,22 @@ const Login = () => {
                 <label htmlFor="email">Votre email</label>
                 <input
                     type="email"
-                    value={email}
-                    autoComplete="on"
+                    name="email"
+                    autoComplete="current-email"
                     onChange={(e) => setEmail(e.target?.value)}
                     required
                 />
                 <label htmlFor="password">Votre mot de passe</label>
                 <input
-                    type="password"
-                    value={password}
-                    autoComplete="off"
+                    type={showPassword ? "text" : "password"}
+                    name="password" 
+                    autoComplete="current-password"
                     onChange={(e) => setPassword(e.target?.value)}
                     required
                 />
+                <div onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                    {showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                </div>
                 {error && <p>{error}</p>}
                 <button type="submit" aria-label="Se connecter">Se connecter</button>
             </form>

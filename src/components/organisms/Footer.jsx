@@ -6,6 +6,7 @@ const Footer = () => {
         <>
             <p>Ressources complémentaires</p>
             <nav className='footer-nav surf' activeclassname="active">
+            <NavLink to="/about" aria-label="Redirection vers la page à propos de notre histoire">Notre histoire</NavLink>
                 <NavLink to="/mentions" aria-label="Redirection vers la page des mentions légales">Mentions légales</NavLink>
                 <NavLink to="/charte" aria-label="Redirection vers la page de la Charte du site">Charte du site</NavLink>
                 <NavLink to="/privacyPolicy" aria-label="Redirection vers la page de politique de confidentialité">Politique de confidentialité</NavLink>

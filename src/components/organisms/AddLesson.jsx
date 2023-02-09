@@ -4,6 +4,7 @@ import { useNavigate, NavLink } from "react-router-dom"
 import axios from 'axios'
 import { teacherState } from "../../store/Provider"
 import { useRecoilValue } from 'recoil'
+import { cycle } from '../../assets/data/Cycle'
 
 // Composant de création d'une leçon de type question / réponse avec possibilité d'ajouter plusieurs notions pour chaque leçon. Démarche itérative de transformation des tableaux et objets sans utiliser les fonctionnalités de register de hook-form (utilisation optimisée dans le composant AddQuizz).
 const AddLesson = () => {
@@ -11,7 +12,6 @@ const AddLesson = () => {
     const { register, handleSubmit } = useForm()
     const [error, setError] = useState('');
     const [lessons, setLessons] = useState([{ question: "", answer: "" },]);
-    const cycle = ["Hors Cycle", "Cycle 1 : PS, MS, GS", "Cycle 2 : CP, CE1, CE2", "Cycle 3 : CM1, CM2, 6ème", "Cycle 4 : 5ème, 4ème, 3ème", "Cycle 5 : Seconde, Première, Terminale", "Cycle 6 ou Supérieur"];
     const navigate = useNavigate();
     const isTeacher = useRecoilValue(teacherState)
 
@@ -41,6 +41,7 @@ const AddLesson = () => {
         // Retransformer les tableaux dans un nouvel objet question / réponse
         itemsArray = itemsArray.map((item) => Object.fromEntries(item))
 
+        console.log(data)
         try {
             const response = await axios
                 .post("http://localhost:8000/api/lesson", {
@@ -63,7 +64,7 @@ const AddLesson = () => {
     return (
         <>
             {isTeacher ? (
-                <form onSubmit={handleSubmit(onSubmit)} method='POST' className='lesson-form'>
+                <form onSubmit={handleSubmit(onSubmit)} method='POST' className='lesson-form' encType="multipart/form-data">
 
                     <label htmlFor="title">Titre de la leçon</label>
                     <input type="text" name="title" {...register('title', { required: "Vous devez entrer titre pour la leçon" })} />
@@ -82,8 +83,11 @@ const AddLesson = () => {
                         ))}
                     </select>
 
+                    <label htmlFor="image">Image</label>
+                    <input type="file" name="file" {...register('image', { required: false })} />
+
                     <label htmlFor="description">Description succincte</label>
-                    <textarea name="description" id="description" {...register('description', { required: true })}></textarea>
+                    <textarea name="description" {...register('description', { required: true })}></textarea>
 
                     {lessons.map((question, index) => (
                         <div key={index}>
@@ -105,7 +109,10 @@ const AddLesson = () => {
                     <button type="submit" aria-label="Valider la création de la leçon">Valider la leçon</button>
                 </form>
             ) : (
-                <p>Vous ne disposez pas des droits nécessaires pour créer une leçon. Vous devez être un professeur et être connecté <NavLink to="/login" aria-label="Redirection vers la page de connexion">ici</NavLink>.</p>
+                <section className='presentation'>
+                    <h2>Presque...</h2>
+                    <p>Vous ne disposez pas des droits nécessaires pour créer une leçon. Vous devez être un professeur et être connecté <NavLink to="/login" aria-label="Redirection vers la page de connexion">ici</NavLink>.</p>
+                </section>
             )}
         </>
     );

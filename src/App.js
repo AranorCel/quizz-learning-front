@@ -19,6 +19,7 @@ import PrivacyPolicy from './components/others/PrivacyPolicy'
 import CookieManagement from './components/others/CookieManagement'
 import Logout from './components/views/Logout'
 import Aide from './components/others/Aide'
+import Create from './components/views/Create'
 
 // Utilisation de BrowserRouter comme library de routing. Mise en place de façon systémique du header et du footer encadrant les "main" des rendus des composants.
 const App = () => {
@@ -34,9 +35,10 @@ const App = () => {
         <main>
           <Routes>
             <Route path='/' element={<Home />} />
+            <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
             <Route path='/logout' element={<Logout />} />
-            <Route path='/signup' element={<SignUp />} />
+            <Route path='/create' element={<Create />} />
             <Route path='/lessons' element={<Lessons />} />
             <Route path='/addLesson' element={<AddLesson />} />
             <Route path='/addQuizz' element={<AddQuizz />} />

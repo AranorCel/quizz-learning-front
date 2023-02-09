@@ -4,6 +4,9 @@
     --text-nav-color: white;
     --text-body-color: rgba(0, 0, 0, 0.5);
     --main-theme-color: #8bc34a;
+    --validate-theme-color: #8cc6f9;
+    --update-theme-color: #d68cf9;
+    --delete-theme-color: #f84a5e;
     --secondary-theme-color: rgb(159, 220, 244);
     --card-theme-color: rgb(248, 229, 198);
     --shadow-theme-color: rgb(217, 218, 219);
@@ -37,8 +40,17 @@ body {
     color: var(--text-body-color);
 }
 
+/** Gestion du format mobile first **/
+@media only screen and (max-width: 640px) {
+    body {
+        margin: 0;
+        padding: 0;
+        font-size: 1.4rem;
+    }
+}
+
 .presentation {
-    padding : 2rem;
+    padding: 2rem;
 }
 
 
@@ -57,7 +69,16 @@ header * {
     display: flex;
     justify-content: space-around;
     padding: 1rem;
-    /* min-width: 700px; */
+}
+
+/** Gestion du format mobile first **/
+@media only screen and (max-width: 640px) {
+    .header-nav {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        font-size: 1.8rem;
+    }
 }
 
 .header-nav a:hover {
@@ -101,7 +122,7 @@ header .active {
 }
 
 
-/*** ADD LESSON & QUIZZ ***/
+/*** ADMIN ACTIONS ***/
 
 .lesson-form,
 .quizz-form,
@@ -118,6 +139,17 @@ header .active {
     flex-wrap: wrap;
     justify-content: center;
     margin: 2rem;
+}
+
+.creator-card {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    padding: 1rem;
+    width: 20vw;
+    min-width: 200px;
+    box-shadow: 5px 5px 15px 2px var(--shadow-theme-color);
+    border-radius: 5px;
 }
 
 
@@ -143,7 +175,7 @@ header .active {
 }
 
 .quizz-card {
-    margin : 2rem;
+    margin: 2rem;
     padding: 1rem;
     width: 40vw;
     min-width: 250px;
@@ -152,7 +184,7 @@ header .active {
 }
 
 .quizz-card p {
-    margin : 0.5rem;
+    margin: 0.5rem;
 }
 
 .checkbox {
@@ -163,6 +195,7 @@ header .active {
 }
 
 /*** Component CARD ***/
+
 .lesson-list,
 .quizz-list {
     display: flex;
@@ -243,6 +276,16 @@ footer * {
     padding: 1rem;
 }
 
+/** Gestion du format mobile first avec adaptation au nombre de liens plus élevé que la nav **/
+@media only screen and (max-width: 800px) {
+    .footer-nav {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        font-size: 1.8rem;
+    }
+}
+
 .footer-nav a:hover {
     color: var(--active-theme-color);
 }
@@ -288,4 +331,17 @@ button a {
 
 button a:hover {
     color: var(--text-body-color);
+}
+
+.button-delete:hover {
+    background-color: var(--delete-theme-color);
+    color: var(--text-nav-color);
+}
+.button-update:hover {
+    background-color: var(--update-theme-color);
+    color: var(--text-nav-color);
+}
+.button-validate:hover {
+    background-color: var(--validate-theme-color);
+    color: var(--text-nav-color);
 }

@@ -1,12 +1,13 @@
-import React from 'react'
-import { NavLink } from "react-router-dom"
-import { authState } from "../../store/Provider"
-import { useRecoilValue } from 'recoil'
+import React from 'react';
+import { NavLink } from "react-router-dom";
+import { authState, teacherState } from "../../store/Provider";
+import { useRecoilValue } from 'recoil';
 
 const Header = () => {
 
     // Utilisation de la valeur de l'état global d'authentification de la connexion afin de jouer sur l'affichage principalement des options de "Se connecter" et "S'enregistrer" qui n'apparaissent pas lorsque l'on est connecté et vice versa avec "Se déconnecter"
-    const isAuth = useRecoilValue(authState)
+    const isAuth = useRecoilValue(authState);
+    const isTeacher = useRecoilValue(teacherState);
 
     return (
         <>
@@ -16,7 +17,11 @@ const Header = () => {
                 <NavLink to="/" aria-label="Redirection vers la page d'accueil">ACCUEIL</NavLink>
                 <NavLink to="/lessons" aria-label="Redirection vers la page des leçons">LEÇONS</NavLink>
                 <NavLink to="/quizz" aria-label="Redirection vers la page des quizz">QUIZZ</NavLink>
-                <NavLink to="/about" aria-label="Redirection vers la page à propos de notre histoire">NOTRE HISTOIRE</NavLink>
+                
+                {isTeacher ? (
+                    <NavLink to="/create" aria-label="Redirection vers la page des quizz">CRÉER DU CONTENU</NavLink>
+                ) : ("")}
+
                 {!isAuth ? (
                     <>
                         <NavLink to="/login" aria-label="Redirection vers la page de connexion">Se connecter</NavLink>

@@ -1,0 +1,1 @@
+export const cycle = ["Hors Cycle", "Cycle 1 : PS, MS, GS", "Cycle 2 : CP, CE1, CE2", "Cycle 3 : CM1, CM2, 6ème", "Cycle 4 : 5ème, 4ème, 3ème", "Cycle 5 : Seconde, Première, Terminale", "Cycle 6 ou Supérieur"];

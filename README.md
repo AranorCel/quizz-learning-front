@@ -67,12 +67,13 @@ Pour le "backend-js" :
 - fs : Pour intéragir avec le système de fichier de l'OS permettant de lire, écrire, supprimer, déplacer, copier sur le disque dur.
 - mongoose : Pour intéragir avec la DB MongoDB et permettant de faire un CRUD sur la DB mais également l'élaboration de schémas et la génération de modèles pour les collections. Il protège également les DB d'attaques malveillantes (validation, échappement, limitation et autorisations)
 - multer : Pour faciliter la gestion des téléchargements de fichiers. Il intègre également la validation des fichiers téléchargés (taille maximale, extension, fichiers multiples) avec la possibilité de stocker sur le disque dur ou en mémoire.
-- nodemon :
+- nodemon : Pour redémarrer automatiquement NodeJS dès qu'une modification est apportée.
 
 Pour le "frontend" :
 - axios : Pour simplifier la gestion des requêtes et des réponses mais aussi pour convertir automatiquement les données au format JSON.
 - react-dom : Pour créer des applications dynamiques et interactives.
 - react-hook-form : Pour améliorer la création des formulaires notamment sur les aspects de validation, de contrôle et d'optimisation des performances.
+- hookform/resolvers : Pour gérer plus efficacement les erreurs dans les formulaires. Il s'associe facilement avec Yup.
 - react-router-dom : Pour gérer les routes et les redirections afin de faciliter la navigation des utilisateurs.
 - yup : Pour valider les données de formulaire avant de les envoyer ce qui sécurise l'application. La création à l'aide de regex et de messages personnalisés est facilitée.
 

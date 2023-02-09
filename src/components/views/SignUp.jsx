@@ -13,10 +13,11 @@ const SignUp = () => {
     const [status, setStatus] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
     const [counter, setCounter] = useState(5);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
-        console.log(data)
+        /* console.log(data) */
         try {
             const response = await axios
                 .post("http://localhost:8000/signup/teacher", {
@@ -64,17 +65,37 @@ const SignUp = () => {
             <form onSubmit={handleSubmit(onSubmit)} method='POST' className='login-teacher'>
 
                 <label htmlFor="email">Votre email</label>
-                <input type="email" name="email" id="email" {...register('email', { required: "Vous devez entrer une adresse mail valide" })} />
+                <input
+                    type="email"
+                    name="email"
+                    {...register('email',
+                        { required: "Vous devez entrer une adresse mail valide" })} />
                 {error && <p>{error}</p>}
 
                 <label htmlFor="password">Votre mot de passe</label>
-                <input type="password" name="password" id="password" autoComplete="current-password" {...register('password', { required: true })} />
+                <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    autoComplete="current-password"
+                    {...register('password',
+                        { required: true })} />
+                <div onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                    {showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                </div>
 
                 <label htmlFor="firstname">Votre prénom</label>
-                <input type="text" name="firstname" id="firstname" {...register('firstname', { required: true })} />
+                <input
+                    type="text"
+                    name="firstname"
+                    {...register('firstname',
+                        { required: true })} />
 
                 <label htmlFor="lastname">Votre nom de famille</label>
-                <input type="text" name="lastname" id="lastname" {...register('lastname', { required: true })} />
+                <input
+                    type="text"
+                    name="lastname"
+                    {...register('lastname',
+                        { required: true })} />
 
                 <button onSubmit={handleSubmit(onSubmit)}>S'enregistrer</button>
             </form>

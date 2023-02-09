@@ -4,26 +4,29 @@ import { useNavigate, NavLink } from "react-router-dom"
 import axios from 'axios'
 import { teacherState } from "../../store/Provider"
 import { useRecoilValue } from 'recoil'
+import { cycle } from '../../assets/data/Cycle'
+import { yupResolver } from '@hookform/resolvers/yup';
+import schema from "../../assets/templates/VerifFieldQuizz"
 
 // Composant de création d'un quizz de type QCM avec possibilité de créer plusieurs QCM par quizz.
 const AddQuizz = () => {
 
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
     const [error, setError] = useState('');
-    const [quizz, setQuizz] = useState([{ question: "", answer: "", choices: new Array(4).fill("") },]);
+    const [quizz, setQuizz] = useState([{ question: "", answer: "", choices: new Array(4).fill({ label: "", check: false }) },]);
     const navigate = useNavigate();
-    const cycle = ["Hors Cycle", "Cycle 1 : PS, MS, GS", "Cycle 2 : CP, CE1, CE2", "Cycle 3 : CM1, CM2, 6ème", "Cycle 4 : 5ème, 4ème, 3ème", "Cycle 5 : Seconde, Première, Terminale", "Cycle 6 ou Supérieur"];
     const isTeacher = useRecoilValue(teacherState)
 
     // Fonctionnalité permettant de créer des questions supplémentaires au quizz 
     const handleAddQuestion = () => {
-        setQuizz([...quizz, { question: "", answer: "", choices: new Array(4).fill("") }]);
+        setQuizz([...quizz, { question: "", answer: "", choices: new Array(4).fill({ label: "", check: false }) }]);
     };
 
     // Avec register, il est possible de définir le format en sortie souhaité. Ici, le schéma retenu est composé des keys "question" et "choices". La key question est en lien avec une value au format String et la key choices est un tableau comprenant à la fois l'option (label) au format String et la réponse (check) au format boolean ce qui permet de gérer les réponses multiples.
     const onSubmit = async data => {
-
+        console.log(data)
         try {
+
             const response = await axios
                 .post("http://localhost:8000/api/quizz", {
                     title: data.title,
@@ -41,11 +44,12 @@ const AddQuizz = () => {
         /* navigate("/quizz") */
     }
 
+    console.log(errors)
     // Affichage et accès limité aux professeurs via l'outil recoil et l'état global associé
     return (
         <>
             {isTeacher ? (
-                <form onSubmit={handleSubmit(onSubmit)} method='POST' className='quizz-form'>
+                <form onSubmit={handleSubmit(onSubmit)} method='POST' className='quizz-form' enctype="multipart/form-data">
 
                     <label htmlFor="title">Titre du quizz</label>
                     <input type="text" name="title" id="title" {...register('title', { required: "Vous devez entrer un titre pour le quizz" })} />
@@ -63,6 +67,9 @@ const AddQuizz = () => {
                             <option key={i}>{c}</option>
                         ))}
                     </select>
+
+                    <label htmlFor="image">Image</label>
+                    <input type="file" name="image" {...register('image', { required: false })} />
 
                     <label htmlFor="description">Description succincte</label>
                     <textarea name="description" id="description" {...register('description', { required: true })}></textarea>
@@ -92,14 +99,16 @@ const AddQuizz = () => {
                                     </div>
                                 ))}
                             </section>
-
                         </div>
                     ))}
                     <button type="button" onClick={handleAddQuestion} aria-label="Ajouter une nouvelle question">Ajouter une question</button>
                     <button type="submit" aria-label="Valider la création du quizz">Valider le quizz</button>
                 </form>
             ) : (
-                <p>Vous ne disposez pas des droits nécessaires pour créer un quizz. Vous devez être un professeur et être connecté <NavLink to="/login" aria-label="Redirection vers la page de connexion">ici</NavLink>.</p>
+                <section className='presentation'>
+                    <h2>Pas encore...</h2>
+                    <p>Vous ne disposez pas des droits nécessaires pour créer un quizz. Vous devez être un professeur et être connecté <NavLink to="/login" aria-label="Redirection vers la page de connexion">ici</NavLink>.</p>
+                </section>
             )}
         </>
     );

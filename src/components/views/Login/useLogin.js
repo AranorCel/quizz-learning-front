@@ -10,8 +10,9 @@ export const useLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [teacher, setTeacher] = useRecoilState(teacherState)
-    const [auth, setAuth] = useRecoilState(authState)
+    const [teacher, setTeacher] = useRecoilState(teacherState);
+    const [, setAuth] = useRecoilState(authState);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,8 +28,8 @@ export const useLogin = () => {
             localStorage.setItem("quizz-learning", session);
             setEmail("")
             setPassword("")
-            setTeacher("teacher")
-            setAuth("connected")
+            setTeacher(true)
+            setAuth(true)
             navigate("/");
         } catch (err) {
             setError(err?.message);
@@ -37,5 +38,5 @@ export const useLogin = () => {
             }
         }
     }
-    return { handleSubmit, email, setEmail, password, setPassword, error, teacher }
+    return { handleSubmit, email, setEmail, password, setPassword, error, teacher, setShowPassword, showPassword }
 };
